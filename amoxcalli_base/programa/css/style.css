@@ -1,0 +1,1634 @@
+/* ============================================================================
+   AMOXCALLI LIBRE · SISTEMA DE DISEÑO UNIFICADO CON CELER LIBRE
+   Estética Apple Books & Apple HIG + Identidad Cultural "La Casa de los Libros"
+   - Global Nav de 44px con translucidez (Frosted Glass / Vibrancy)
+   - Tipografía San Francisco (UI) + New York / Georgia (Títulos y Lectura)
+   - Iconografía 100% vectorial de línea fina (1.75px / 1.8px) — Cero emojis
+   - Tres ambientes: Piedra Claro (#eeeff3), Códice Cálido (#efe8d8) y Oscuro OLED (#000000)
+   ============================================================================ */
+
+:root,
+[data-theme="light"] {
+  --bg-page: #eeeff3;
+  --bg-workspace: #e6e7ec;
+  --bg-card: #f8f8fa;
+  --bg-card-hover: #ffffff;
+  --bg-paper: #f7f7fa;
+  --bg-shelf: #e4e5ea;
+  --bg-nav: rgba(238, 239, 243, 0.85);
+  --bg-sidebar: rgba(236, 237, 242, 0.90);
+  --border-hairline: rgba(0, 0, 0, 0.08);
+  --border-input: #c9cbd2;
+  --text-primary: #1d1d1f;
+  --text-secondary: #5c5c61;
+  --text-tertiary: #7d7d82;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-soft: rgba(0, 113, 227, 0.09);
+  --accent-border: rgba(0, 113, 227, 0.24);
+  --cultural-gold: #b45309;
+  --card-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.08);
+  --paper-shadow: 0 4px 20px rgba(0, 0, 0, 0.035), 0 24px 60px rgba(0, 0, 0, 0.045);
+  --neon-yellow: #ffe600;
+  --neon-green: #39ff14;
+  --neon-pink: #ff007f;
+  --spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "New York", "Iowan Old Style", "Charter", "Georgia", serif;
+}
+
+/* Tema Códice Cálido (Identidad Cultural Amoxcalli / Apple Books Sepia) */
+[data-theme="sepia"] {
+  --bg-page: #efe8d8;
+  --bg-workspace: #e8dfcc;
+  --bg-card: #fbf7ee;
+  --bg-card-hover: #fffdf9;
+  --bg-paper: #fbf7ee;
+  --bg-shelf: #e5dcc8;
+  --bg-nav: rgba(239, 232, 216, 0.86);
+  --bg-sidebar: rgba(244, 238, 225, 0.92);
+  --border-hairline: rgba(60, 42, 20, 0.095);
+  --border-input: #d5c8b4;
+  --text-primary: #2c241b;
+  --text-secondary: #6e5f4f;
+  --text-tertiary: #8c7b68;
+  --accent: #b45309;
+  --accent-hover: #92400e;
+  --accent-soft: rgba(180, 83, 9, 0.11);
+  --accent-border: rgba(180, 83, 9, 0.28);
+  --card-shadow: 0 4px 18px rgba(60, 42, 20, 0.05);
+  --card-shadow-hover: 0 12px 30px rgba(60, 42, 20, 0.10);
+  --paper-shadow: 0 4px 20px rgba(60, 42, 20, 0.05), 0 24px 60px rgba(60, 42, 20, 0.06);
+}
+
+/* Tema Oscuro OLED (Idéntico a Celer Libre Dark Mode) */
+[data-theme="dark"] {
+  --bg-page: #000000;
+  --bg-workspace: #000000;
+  --bg-card: #151517;
+  --bg-card-hover: #1d1d20;
+  --bg-paper: #151517;
+  --bg-shelf: #111113;
+  --bg-nav: rgba(18, 18, 20, 0.84);
+  --bg-sidebar: rgba(22, 22, 24, 0.90);
+  --border-hairline: rgba(255, 255, 255, 0.095);
+  --border-input: #3a3a3c;
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-tertiary: #6e6e73;
+  --accent: #0071e3;
+  --accent-hover: #2997ff;
+  --accent-soft: rgba(41, 151, 255, 0.14);
+  --accent-border: rgba(41, 151, 255, 0.32);
+  --card-shadow: 0 6px 24px rgba(0, 0, 0, 0.48);
+  --card-shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.72);
+  --paper-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  min-height: 100%;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.28s var(--spring), color 0.28s var(--spring);
+}
+
+svg {
+  flex-shrink: 0;
+}
+
+/* ============================================================================
+   1. BARRA SUPERIOR MINIMALISTA DE 44PX (APPLE GLOBAL NAV)
+   ============================================================================ */
+.apple-global-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: var(--bg-nav);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  z-index: 100;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.global-nav-inner {
+  max-width: 1120px;
+  height: 44px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-item {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  opacity: 0.84;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 999px;
+  transition: opacity 0.18s ease, background-color 0.18s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-item:hover {
+  opacity: 1;
+  background: rgba(120, 120, 128, 0.09);
+}
+
+.nav-brand-logo {
+  font-size: 13.5px;
+  font-weight: 600;
+  opacity: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.nav-pill-lan {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  font-weight: 500;
+  padding: 4px 11px;
+  opacity: 1;
+}
+
+.nav-pill-lan:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #34c759;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #34c759;
+  display: inline-block;
+}
+
+/* ============================================================================
+   2. ENCABEZADO EDITORIAL DE BIBLIOTECA (ESTILO CELER LIBRE + CULTURA)
+   ============================================================================ */
+.library-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+.library-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.library-cultural-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.library-lockup {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.library-brand {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.library-script {
+  font-family: "Snell Roundhand", "Apple Chancery", "Georgia", serif;
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #0071e3 0%, #5e5ce6 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-right: 4px;
+}
+
+.library-headline {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.024em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.library-subline {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.48;
+}
+
+/* ============================================================================
+   3. CONTROLES DE BÚSQUEDA COMPACTOS (LOS LIBROS SON LOS PROTAGONISTAS)
+   ============================================================================ */
+.library-controls {
+  max-width: 580px;
+  margin: 0 auto 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.library-search-box {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-input);
+  border-radius: 999px;
+  padding: 0 32px 0 36px;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.library-search-box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.library-search-icon {
+  position: absolute;
+  left: 13px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+.library-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.library-search-input::placeholder {
+  color: var(--text-tertiary);
+  font-size: 12.5px;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: var(--text-tertiary);
+  color: var(--bg-card);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sort-select {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-input);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s var(--spring);
+}
+
+.cat-pill:hover {
+  color: var(--text-primary);
+}
+
+.cat-pill.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.subfilter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.format-pills {
+  display: flex;
+  gap: 5px;
+}
+
+.fmt-pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hairline);
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fmt-pill.active,
+.fmt-pill:hover {
+  background: var(--text-primary);
+  color: var(--bg-page);
+  border-color: var(--text-primary);
+}
+
+/* ============================================================================
+   4. ESTANTERÍAS Y TARJETAS DE LIBROS (ESTILO APPLE BOOKS DE CELER LIBRE)
+   ============================================================================ */
+.continue-section {
+  margin-bottom: 40px;
+  display: none;
+}
+
+.continue-section.visible {
+  display: block;
+}
+
+.shelf-section {
+  margin-bottom: 46px;
+}
+
+.shelf-header {
+  margin-bottom: 18px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--border-hairline);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.shelf-title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shelf-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.shelf-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
+}
+
+.book-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.24s var(--spring), box-shadow 0.24s var(--spring), background-color 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.book-card-main-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+/* ============================================================================
+   PORTADA DE LIBRO (LOS LIBROS COMO PROTAGONISTAS VISUALES)
+   ============================================================================ */
+.book-cover-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.40;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-shelf);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.26s var(--spring), box-shadow 0.26s var(--spring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="dark"] .book-cover-wrap {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
+}
+
+.book-card:hover .book-cover-wrap {
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+[data-theme="dark"] .book-card:hover .book-cover-wrap {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.85);
+}
+
+/* Sombra y pliegue de lomo de libro encuadernado */
+.book-spine-crease {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 16px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.24) 0%,
+    rgba(255, 255, 255, 0.12) 10%,
+    rgba(0, 0, 0, 0.08) 22%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Imagen de portada real (cuando existe) */
+.book-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.book-cover-img.loaded {
+  opacity: 1;
+}
+
+/* Tapa editorial tipográfica cuando el libro no tiene imagen */
+.book-cover-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-shelf) 100%);
+  border-left: 5px solid var(--fallback-accent, var(--accent));
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.fallback-frame {
+  height: 100%;
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.fallback-kicker {
+  font-size: 8.5px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fallback-accent, var(--accent));
+}
+
+.fallback-title {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.28;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 4px 0;
+}
+
+.fallback-author {
+  font-size: 10px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fallback-ornament {
+  color: var(--text-tertiary);
+  opacity: 0.4;
+  display: flex;
+  justify-content: center;
+}
+
+/* Información de la Obra debajo de la Portada */
+.book-info-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.book-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.book-code-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--spine-color, var(--accent));
+  background: var(--accent-soft);
+  padding: 2.5px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.book-open-arrow {
+  color: var(--text-tertiary);
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.book-card:hover .book-open-arrow {
+  transform: translateX(2px);
+  color: var(--accent);
+}
+
+.book-title {
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-author {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.reading-progress-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #28a745;
+  background: rgba(52, 199, 89, 0.12);
+  padding: 2.5px 7px;
+  border-radius: 5px;
+  width: fit-content;
+  margin-top: 2px;
+}
+
+.book-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  padding-top: 8px;
+  border-top: 1px solid var(--border-hairline);
+}
+
+.card-download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 3px 7px;
+  border-radius: 6px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.card-download-link:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ============================================================================
+   5. VISOR DE LECTURA UNIFICADO (ESTILO LIBRO.HTML DE CELER LIBRE)
+   ============================================================================ */
+.viewer-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-workspace);
+}
+
+.floating-toolbar {
+  min-height: 44px;
+  padding: 4px 18px;
+  background: var(--bg-nav);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border-hairline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 60;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.toolbar-center {
+  flex: 1;
+  text-align: center;
+  min-width: 140px;
+  padding: 0 8px;
+}
+
+.toolbar-book-crumb {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toolbar-pos-sub {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  display: block;
+}
+
+/* Botones SF (Estilo Apple Global Nav de Celer Libre) */
+.sf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 29px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.16s var(--spring);
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  opacity: 0.86;
+}
+
+.sf-btn:hover:not(:disabled) {
+  opacity: 1;
+  background: rgba(120, 120, 128, 0.11);
+}
+
+.sf-btn.primary {
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 500;
+  padding: 0 12px;
+  opacity: 1;
+}
+
+.sf-btn.primary:hover {
+  background: var(--accent-hover);
+}
+
+.sf-btn.subtle-outline {
+  border-color: var(--border-hairline);
+  background: var(--bg-card);
+}
+
+/* Paleta Neón Minimalista e Integrada */
+.neon-palette {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-card);
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hairline);
+}
+
+.neon-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.neon-dot:hover,
+.neon-dot.active {
+  transform: scale(1.18);
+  border-color: var(--text-primary);
+}
+
+.neon-dot.yellow { background: var(--neon-yellow); }
+.neon-dot.green { background: var(--neon-green); }
+.neon-dot.pink { background: var(--neon-pink); }
+
+/* Popover de Apariencia Tipográfica (Aa - Idéntico a Celer Libre) */
+.appearance-wrap {
+  position: relative;
+}
+
+.appearance-popover {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 248px;
+  background: var(--bg-nav);
+  backdrop-filter: saturate(200%) blur(30px);
+  -webkit-backdrop-filter: saturate(200%) blur(30px);
+  border: 1px solid var(--border-hairline);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 120;
+}
+
+.appearance-popover.open {
+  display: flex;
+}
+
+.pop-row {
+  display: flex;
+  gap: 6px;
+}
+
+.pop-seg-btn {
+  flex: 1;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-paper);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.14s ease;
+}
+
+.pop-seg-btn:hover {
+  border-color: var(--accent);
+}
+
+.theme-swatch-row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.theme-swatch {
+  flex: 1;
+  height: 34px;
+  border-radius: 9px;
+  border: 1.5px solid var(--border-hairline);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-swatch.light { background: #ffffff; color: #1d1d1f; }
+.theme-swatch.sepia { background: #fbf7ee; color: #2c241b; }
+.theme-swatch.dark  { background: #1c1c1e; color: #f5f5f7; }
+.theme-swatch.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+/* Lienzo de Hoja Editorial */
+.viewer-content-area {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.viewer-frame-container {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding: 28px 20px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reader-canvas {
+  max-width: 780px;
+  width: 100%;
+  background: var(--bg-paper);
+  border: 1px solid var(--border-hairline);
+  border-radius: 18px;
+  padding: 48px 52px;
+  line-height: 1.82;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  box-shadow: var(--paper-shadow);
+  color: var(--text-primary);
+  user-select: text;
+  -webkit-user-select: text;
+  transition: font-size 0.15s ease, background-color 0.25s ease;
+}
+
+.reader-canvas.font-sans {
+  font-family: var(--font-sans);
+}
+
+.reader-canvas img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 18px auto;
+  display: block;
+}
+
+.reader-heading {
+  font-family: var(--font-sans);
+  font-size: 1.22em;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin: 24px 0 12px;
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 6px;
+}
+
+.reader-paragraph {
+  margin-bottom: 1.18em;
+  text-align: justify;
+}
+
+.reader-list-item {
+  padding-left: 18px;
+  margin-bottom: 0.7em;
+}
+
+.empty-page-notice {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border-hairline);
+  border-radius: 12px;
+  font-family: var(--font-sans);
+}
+
+.native-pdf-frame {
+  width: 100%;
+  max-width: 960px;
+  height: 78vh;
+  border: 1px solid var(--border-hairline);
+  border-radius: 16px;
+  background: #fff;
+}
+
+/* Subrayados Neón Interactivos (con capacidad de Desubrayar al hacer clic) */
+mark.hl-neon-yellow,
+mark.hl-neon-green,
+mark.hl-neon-pink {
+  border-radius: 4px;
+  padding: 1px 4px;
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+
+mark.hl-neon-yellow {
+  background-color: var(--neon-yellow) !important;
+  color: #111111 !important;
+}
+
+mark.hl-neon-green {
+  background-color: var(--neon-green) !important;
+  color: #111111 !important;
+}
+
+mark.hl-neon-pink {
+  background-color: var(--neon-pink) !important;
+  color: #ffffff !important;
+}
+
+mark.hl-neon-yellow:hover,
+mark.hl-neon-green:hover,
+mark.hl-neon-pink:hover {
+  opacity: 0.75;
+  text-decoration: line-through;
+}
+
+/* Controles de Navegación Fijos Arriba a la Izquierda (junto a Amoxcalli) */
+.toolbar-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-hairline);
+  margin: 0 3px;
+  flex-shrink: 0;
+}
+
+.toolbar-nav-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.nav-step-btn {
+  height: 29px;
+  padding: 0 11px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.sf-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.nav-jump-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--bg-card);
+  padding: 0 10px;
+  height: 29px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hairline);
+  min-width: 90px;
+  max-width: 210px;
+  overflow: hidden;
+}
+
+.jump-select,
+.jump-input {
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  outline: none;
+}
+
+.jump-select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.jump-input {
+  width: 48px;
+  text-align: center;
+  border: 1px solid var(--border-hairline);
+  border-radius: 6px;
+  padding: 1px 5px;
+  background: var(--bg-page);
+}
+
+/* Panel Lateral de Divisores y Subrayados (Frosted Glass) */
+.viewer-sidebar {
+  width: 330px;
+  background: var(--bg-sidebar);
+  backdrop-filter: saturate(190%) blur(28px);
+  -webkit-backdrop-filter: saturate(190%) blur(28px);
+  border-left: 1px solid var(--border-hairline);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
+.viewer-sidebar.hidden {
+  display: none;
+}
+
+.sidebar-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-hairline);
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sidebar-section-kicker {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sidebar-footer {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border-hairline);
+}
+
+.annotation-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  margin-bottom: 8px;
+}
+
+.annotation-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.annotation-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+.btn-delete-ann {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-delete-ann:hover {
+  color: #ff3b30;
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.annotation-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-secondary);
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+/* Modal Minimalista Estilo Apple HIG */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: 20px;
+  max-width: 460px;
+  width: 100%;
+  padding: 26px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-close {
+  background: rgba(120, 120, 128, 0.12);
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Notificación Toast Flotante */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-nav);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  color: var(--text-primary);
+  border: 1px solid var(--border-hairline);
+  padding: 9px 18px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  font-size: 12.5px;
+  font-weight: 500;
+  z-index: 2000;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .library-container {
+    padding: 22px 14px 64px;
+  }
+  .library-headline {
+    font-size: 28px;
+  }
+  .library-subline {
+    font-size: 13px;
+  }
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 12px;
+  }
+  .book-card {
+    padding: 10px 10px 10px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+  .fallback-title {
+    font-size: 11px;
+    -webkit-line-clamp: 3;
+  }
+  .book-title {
+    font-size: 13.5px;
+  }
+  .book-author {
+    font-size: 11px;
+  }
+  .search-row {
+    flex-direction: row;
+    gap: 6px;
+  }
+  .viewer-frame-container {
+    padding: 14px 12px 56px;
+  }
+  .toolbar-left {
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+  .toolbar-nav-controls {
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+  }
+  .nav-step-btn {
+    height: 28px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+  .nav-jump-group {
+    height: 28px;
+    padding: 0 8px;
+    min-width: 64px;
+    max-width: 145px;
+  }
+  .jump-select {
+    font-size: 11px;
+  }
+  .reader-canvas {
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+  .sf-btn span.btn-label {
+    display: none;
+  }
+  .viewer-sidebar {
+    position: absolute;
+    right: 0;
+    top: 44px;
+    bottom: 0;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: -8px 0 28px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ==========================================================================
+   MÓDULO DE ADMINISTRACIÓN INTERNA DEL ACERVO (AMOXCALLI BASE)
+   ========================================================================== */
+
+.nav-pill-admin {
+  background: var(--accent-soft, rgba(16, 185, 129, 0.1));
+  color: var(--accent, #059669);
+  border: 1px solid var(--accent-border, rgba(16, 185, 129, 0.25));
+  font-weight: 600;
+  font-size: 11.5px;
+  border-radius: 980px;
+  padding: 0 11px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.nav-pill-admin:hover {
+  background: var(--accent, #059669);
+  color: #ffffff;
+  border-color: var(--accent, #059669);
+  transform: translateY(-0.5px);
+}
+
+.modal-admin-content {
+  max-width: 580px;
+  width: 100%;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-surface-secondary, rgba(0, 0, 0, 0.04));
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.admin-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.admin-tab:hover {
+  color: var(--text-primary);
+}
+
+.admin-tab.active {
+  background: var(--bg-surface, #ffffff);
+  color: var(--accent, #059669);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.admin-tab-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.admin-tab-pane {
+  display: none;
+}
+
+.admin-tab-pane.active {
+  display: block;
+}
+
+.admin-dropzone {
+  border: 2px dashed var(--border-color, #cbd5e1);
+  border-radius: 14px;
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--bg-surface-secondary, rgba(0, 0, 0, 0.02));
+  position: relative;
+}
+
+.admin-dropzone:hover,
+.admin-dropzone.dragover {
+  border-color: var(--accent, #059669);
+  background: var(--accent-soft, rgba(16, 185, 129, 0.06));
+  transform: scale(1.005);
+}
+
+.dropzone-icon {
+  color: var(--accent, #059669);
+  margin-bottom: 10px;
+}
+
+.dropzone-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.dropzone-text strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.admin-file-hidden {
+  display: none;
+}
+
+.dropzone-selected-info {
+  margin-top: 14px;
+  padding: 8px 14px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent, #059669);
+  display: inline-block;
+}
+
+.admin-form-group {
+  margin-bottom: 14px;
+}
+
+.admin-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.admin-input-file,
+.admin-select,
+.admin-text-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #cbd5e1);
+  border-radius: 8px;
+  background: var(--bg-surface, #ffffff);
+  color: var(--text-primary);
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.admin-select:focus,
+.admin-text-input:focus {
+  border-color: var(--accent, #059669);
+  box-shadow: 0 0 0 3px var(--accent-soft, rgba(16, 185, 129, 0.15));
+}
+
+.admin-status-box {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.admin-status-box.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.admin-status-box.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.admin-status-box.loading {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.admin-salas-list {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.admin-sala-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-surface-secondary, rgba(0, 0, 0, 0.02));
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 10px;
+}
+
+.admin-sala-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-sala-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.admin-sala-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.admin-btn-delete {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-btn-delete:hover {
+  background: #dc2626;
+  color: #ffffff;
+}

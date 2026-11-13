@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Visor Editorial — Amoxcalli Libre</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="viewer-layout">
+
+  <!-- Barra Superior Minimalista 44px (Ecosistema Visual Celer Libre) -->
+  <header class="floating-toolbar">
+    <div class="toolbar-left">
+      <a href="index.html" class="sf-btn" title="Volver a la Biblioteca Amoxcalli">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Amoxcalli</span>
+      </a>
+
+      <span class="toolbar-sep" aria-hidden="true"></span>
+
+      <!-- Controles de Navegación Fijos junto a Amoxcalli (Arriba a la Izquierda) -->
+      <nav class="toolbar-nav-controls" aria-label="Navegación de capítulos y páginas">
+        <button id="btn-nav-prev" class="sf-btn subtle-outline nav-step-btn" title="Capítulo o página anterior">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span class="nav-btn-text">Anterior</span>
+        </button>
+
+        <div class="nav-jump-group">
+          <select id="select-salto-epub" class="jump-select" style="display: none;" aria-label="Saltar a capítulo"></select>
+
+          <div id="grupo-salto-pdf" style="display: none; align-items: center; justify-content: center; gap: 5px; font-size: 12px; color: var(--text-secondary);">
+            <span>Pág.</span>
+            <input type="number" id="input-salto-pdf" class="jump-input" min="1" value="1" aria-label="Número de página" />
+            <span id="label-total-pdf">de 1</span>
+          </div>
+        </div>
+
+        <button id="btn-nav-next" class="sf-btn primary nav-step-btn" title="Capítulo o página siguiente">
+          <span class="nav-btn-text">Siguiente</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <div class="toolbar-center">
+      <div id="visor-titulo-libro" class="toolbar-book-crumb">Cargando obra...</div>
+      <span id="indicador-posicion" class="toolbar-pos-sub">Cargando...</span>
+    </div>
+
+    <div class="toolbar-right">
+      <!-- Paleta de 3 Colores Neón -->
+      <div class="neon-palette" title="Color de subrayado activo">
+        <button class="neon-dot yellow active" data-color="yellow" title="Amarillo (Ideas Principales)"></button>
+        <button class="neon-dot green" data-color="green" title="Verde (Datos y Evidencias)"></button>
+        <button class="neon-dot pink" data-color="pink" title="Rosa (Dudas y Debate)"></button>
+      </div>
+
+      <!-- Botón Subrayar (Icono Vectorial) -->
+      <button id="btn-subrayar-neon" class="sf-btn subtle-outline" title="Selecciona texto y pulsa aquí para subrayar">
+        <svg width="13.5" height="13.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+        </svg>
+        <span class="btn-label">Subrayar</span>
+      </button>
+
+      <!-- Botón Desubrayar / Borrador (Icono Vectorial) -->
+      <button id="btn-desubrayar" class="sf-btn subtle-outline" title="Quitar subrayado seleccionado (o haz clic directo sobre cualquier texto subrayado)">
+        <svg width="13.5" height="13.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"></path>
+          <path d="M22 21H7"></path>
+          <path d="m5 11 9 9"></path>
+        </svg>
+        <span class="btn-label">Desubrayar</span>
+      </button>
+
+      <!-- Botón Crear Divisor / Marcapáginas -->
+      <button id="btn-crear-divisor" class="sf-btn primary" title="Guardar divisor / marcapáginas en esta página">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span class="btn-label">Divisor</span>
+      </button>
+
+      <!-- Alternar Vista Original PDF (solo visible en PDFs) -->
+      <button id="btn-modo-pdf-original" class="sf-btn subtle-outline" style="display: none;" title="Alternar entre Texto Fluido y PDF Original">
+        <svg width="13.5" height="13.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        <span class="btn-label" id="label-modo-pdf">PDF Original</span>
+      </button>
+
+      <!-- Popover de Apariencia Tipográfica (Aa - Idéntico a Celer Libre) -->
+      <div class="appearance-wrap">
+        <button id="btn-apariencia" class="sf-btn subtle-outline" title="Apariencia de lectura (Letra y Tema)">
+          <span style="font-family: var(--font-serif); font-weight: 600; font-size: 13px;">Aa</span>
+        </button>
+
+        <div id="popover-apariencia" class="appearance-popover">
+          <div class="pop-row">
+            <button id="btn-font-down" class="pop-seg-btn" title="Reducir tamaño de letra">A−</button>
+            <button id="btn-font-up" class="pop-seg-btn" title="Aumentar tamaño de letra">A+</button>
+          </div>
+          <div class="pop-row">
+            <button id="btn-font-serif" class="pop-seg-btn active" data-font="serif" style="font-family: var(--font-serif);">Editorial</button>
+            <button id="btn-font-sans" class="pop-seg-btn" data-font="sans">Moderna</button>
+          </div>
+          <div class="theme-swatch-row">
+            <button class="theme-swatch light" data-swatch-theme="light">Claro</button>
+            <button class="theme-swatch sepia" data-swatch-theme="sepia">Códice</button>
+            <button class="theme-swatch dark" data-swatch-theme="dark">Oscuro</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Descargar Libro Original -->
+      <a id="btn-descargar-libro" href="#" class="sf-btn" title="Guardar archivo original en el dispositivo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+      </a>
+
+      <!-- Panel Lateral de Apuntes -->
+      <button id="btn-toggle-sidebar" class="sf-btn subtle-outline" title="Abrir panel de Divisores y Subrayados">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="15" y1="3" x2="15" y2="21"></line>
+        </svg>
+        <span class="btn-label">Apuntes</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Área de Contenido Unificada -->
+  <div class="viewer-content-area">
+
+    <main class="viewer-frame-container" id="contenedor-scroll">
+
+      <article id="reader-canvas" class="reader-canvas">
+        <!-- Contenido inyectado dinámicamente -->
+      </article>
+
+      <div id="contenedor-pdf-nativo" style="display: none; width: 100%; max-width: 960px;">
+        <iframe id="iframe-pdf-nativo" class="native-pdf-frame" title="Vista PDF Original"></iframe>
+      </div>
+
+    </main>
+
+    <!-- Panel Lateral de Apuntes (Divisores y Subrayados) -->
+    <aside id="sidebar-anotaciones" class="viewer-sidebar hidden">
+      <div class="sidebar-header">
+        <span style="display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Divisores y Subrayados</span>
+        </span>
+        <button id="btn-cerrar-sidebar" class="modal-close" aria-label="Cerrar panel">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-body">
+        <div>
+          <h4 class="sidebar-section-kicker">Divisores / Marcapáginas</h4>
+          <div id="lista-divisores-sidebar"></div>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <h4 class="sidebar-section-kicker">Citas Subrayadas (Clic en la página para desubrayar)</h4>
+          <div id="lista-subrayados-sidebar"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="btn-exportar-apuntes" class="sf-btn primary" style="width: 100%; height: 34px; justify-content: center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Descargar Mis Apuntes (.txt)</span>
+        </button>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Modal Minimalista para Nuevo Divisor -->
+  <div id="modal-divisor" class="modal-overlay">
+    <div class="modal-content" style="max-width: 390px;">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Nuevo Divisor</span>
+        </h3>
+        <button id="btn-cerrar-modal-divisor" class="modal-close" aria-label="Cerrar">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <p id="subtitulo-modal-divisor" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+        Etiqueta para recordar esta sección:
+      </p>
+      <div class="library-search-box" style="padding: 0 14px; margin-bottom: 16px; height: 42px;">
+        <input
+          type="text"
+          id="input-nombre-divisor"
+          class="library-search-input"
+          placeholder="Ej. Concepto clave / Para debatir"
+        />
+      </div>
+      <div style="display: flex; gap: 8px; justify-content: flex-end;">
+        <button id="btn-cancelar-divisor" class="sf-btn subtle-outline" style="height: 32px; padding: 0 14px;">Cancelar</button>
+        <button id="btn-guardar-divisor" class="sf-btn primary" style="height: 32px; padding: 0 16px;">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-visor" class="toast-notice"></div>
+
+  <script src="js/visor.js"></script>
+</body>
+</html>

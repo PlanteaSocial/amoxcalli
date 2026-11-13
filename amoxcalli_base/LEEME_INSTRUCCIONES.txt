@@ -1,0 +1,112 @@
+================================================================================
+                    AMOXCALLI BASE · GUÍA DE INICIO RÁPIDO
+          La Casa de los Libros · Iniciativa Plantea · Cero Instalación
+================================================================================
+
+¡Bienvenido(a) a Amoxcalli Base! (Del náhuatl: "Amoxtli" = libro, "Calli" = casa).
+
+Amoxcalli Base es la versión ligera y modular de la biblioteca cultural y
+servidor de lectura digital comunitaria de la Iniciativa Plantea.
+
+A diferencia de la versión completa (que viene pre-cargada con 205 libros),
+Amoxcalli Base viene LIMPIO y ultraligero para que cada profesor, mediador o
+comunidad educativa arme su acervo exactamente a la medida de sus estudiantes,
+integrando los paquetes temáticos descargados de nuestra página web o sus propios
+materiales didácticos (.epub y .pdf).
+
+Funciona directamente desde esta memoria USB o carpeta, 100% SIN INTERNET,
+sin instalar ningún programa y con cero configuración.
+
+
+--------------------------------------------------------------------------------
+¿CÓMO INICIARLO EN TU COMPUTADORA?
+--------------------------------------------------------------------------------
+
+  • EN WINDOWS:
+    Haz doble clic en:
+        👉 iniciar_amoxcalli.bat
+
+  • EN LINUX O MAC:
+    Haz doble clic o ejecuta en la terminal:
+        👉 ./iniciar_amoxcalli.sh
+
+¡Listo! En menos de 1 segundo se abrirá tu navegador web con Amoxcalli.
+(Mantén abierta la pequeña ventana de terminal mientras uses la biblioteca).
+
+
+--------------------------------------------------------------------------------
+¿CÓMO INTEGRAR LOS PAQUETES TEMÁTICOS DESCARGADOS? (MUY FÁCIL)
+--------------------------------------------------------------------------------
+
+Los paquetes temáticos agrupan obras curadas para secundaria, preparatoria,
+lectores principiantes y adultos jóvenes (Ciencia y Cosmos, Misterio y Deducción,
+Aventura, Romance y Emociones, Estrategia Mental, Crónicas Vivas, Humor y Lecturas
+Express, Mitología y Teatro, Fantasía, Crítica Social y Biografías/Vocación).
+
+Para agregar un paquete descargado:
+  1. Descarga el paquete temático desde nuestra página web (archivo .zip,
+     por ejemplo: "Paquete_01_Ciencia_Fisica_y_Cosmos.zip").
+  2. Haz clic derecho sobre el archivo ZIP y selecciona "Extraer todo..."
+     o "Descomprimir".
+  3. Aparecerá una carpeta con el contenido (por ejemplo: "01_Ciencia_Fisica_y_Cosmos").
+  4. COPIA o MUEVE esa carpeta completa dentro de:
+         👉 programa -> libros
+  5. Recarga la página web de Amoxcalli en tu navegador (presiona F5).
+  6. ¡Listo! La sala temática aparecerá de inmediato con todos sus libros,
+     portadas en alta definición y navegación por capítulos.
+
+
+--------------------------------------------------------------------------------
+¿CÓMO INTEGRAR LIBROS INDIVIDUALES (.EPUB O .PDF)?
+--------------------------------------------------------------------------------
+
+Si descargaste libros individuales o deseas agregar tus propios documentos:
+
+  • OPCIÓN A (Dentro de una sala existente):
+    Copia tu archivo .epub o .pdf dentro de cualquiera de las carpetas de
+    programa -> libros (ej. dentro de "01_Ciencia_Fisica_y_Cosmos").
+
+  • OPCIÓN B (Crear una nueva sala temática a tu gusto):
+    Crea una nueva carpeta dentro de "programa -> libros" con el nombre que desees
+    (ejemplo: "07_Historia_de_Mexico" o "Lecturas_Segundo_B"). Coloca tus libros
+    adentro y Amoxcalli creará la sala automáticamente.
+
+  • OPCIÓN C (En el catálogo general):
+    Si colocas un libro directamente suelto en "programa -> libros", aparecerá
+    clasificado bajo la sala "Acervo General".
+
+  * TIP PARA PORTADAS:
+    Si tu libro se llama "Novela.epub", puedes colocar junto a él una imagen
+    llamada "Novela.jpg" o "Novela.png". Si no tienes imagen externa, Amoxcalli
+    extraerá automáticamente la portada original que venga dentro del EPUB.
+
+
+--------------------------------------------------------------------------------
+¿CÓMO TRANSMITIR EN EL AULA A CELULARES Y TABLETAS (SIN GASTAR DATOS)?
+--------------------------------------------------------------------------------
+
+Amoxcalli convierte la computadora del profesor en un servidor Wi-Fi de aula:
+  1. Conecta la computadora del maestro y los celulares de los alumnos a la
+     misma red Wi-Fi del salón (no se necesita internet ni datos móviles).
+  2. En la barra superior de Amoxcalli haz clic en el botón con la dirección IP
+     verde o en "Compartir con Alumnos / QR".
+  3. Aparecerá un CÓDIGO QR y la dirección local (ej. http://192.168.1.xxx:8080).
+  4. Los alumnos escanean el código QR con la cámara de su teléfono.
+  5. ¡Hasta 30 alumnos pueden leer, navegar y subrayar simultáneamente!
+
+
+--------------------------------------------------------------------------------
+MANUALES DETALLADOS INCLUIDOS EN ESTA CARPETA:
+--------------------------------------------------------------------------------
+
+  👨‍🏫 MANUAL_PROFESORES.txt
+     Guía didáctica completa: planeación por paquetes, ideas de dinámicas de
+     aula, gestión avanzada del acervo escolar y configuración de red.
+
+  📖 MANUAL_ALUMNO.txt
+     Guía para estudiantes: cómo buscar libros, leer en celular o computadora,
+     modos de lectura (Sepia, Crema, Oscuro) y subrayado de notas.
+
+================================================================================
+  Amoxcalli Base · Iniciativa Plantea · Tecnología libre para aulas soberanas
+================================================================================

@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+.amoxcalli_cache.json
+amoxcalli_base/programa/runtime/
+amoxcalli_base/programa/libros/*
+!amoxcalli_base/programa/libros/.gitkeep

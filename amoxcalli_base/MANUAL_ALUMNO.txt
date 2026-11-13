@@ -1,0 +1,100 @@
+================================================================================
+         AMOXCALLI · GUÍA PRÁCTICA PARA EL ALUMNO Y EL LECTOR
+    Descubre, lee y subraya las mejores obras maestras 100% sin internet
+================================================================================
+
+¡Hola! Tienes en tus manos "Amoxcalli" (La Casa de los Libros), tu biblioteca
+personal y escolar para disfrutar de más de 200 obras maestras de la literatura
+universal, aventura, ciencia, misterio y filosofía.
+
+Funciona completamente SIN INTERNET, directo desde una memoria USB o en red local.
+Puedes leer en la computadora del aula o desde tu propio celular o tableta.
+
+
+--------------------------------------------------------------------------------
+PASO 1: ¿CÓMO ABRIR AMOXCALLI EN TU COMPUTADORA?
+--------------------------------------------------------------------------------
+
+  • EN WINDOWS:
+    Haz doble clic en:
+        👉 iniciar_amoxcalli.bat
+
+  • EN LINUX O MAC:
+    Haz doble clic o escribe en la terminal:
+        👉 ./iniciar_amoxcalli.sh
+
+  Se abrirá una ventana de terminal y de inmediato tu navegador cargará la
+  biblioteca. Mantén abierta la ventanita mientras leas.
+
+
+--------------------------------------------------------------------------------
+PASO 2: ¿CÓMO LEER DESDE TU TELÉFONO CELULAR (SIN GASTAR DATOS)?
+--------------------------------------------------------------------------------
+
+  1. Asegúrate de que tu celular esté conectado a la misma red Wi-Fi del salón.
+     (¡No se necesitan datos móviles ni saldo!).
+  2. En la computadora de Amoxcalli haz clic en el botón verde de la red o en
+     "Compartir con Alumnos / QR".
+  3. Abre la cámara de tu celular y apunta al CÓDIGO QR en pantalla.
+  4. Toca el enlace que detecta tu cámara (ejemplo: http://192.168.1.129:8080).
+  5. ¡Listo! Todo el catálogo y el lector de libros se abrirán en tu celular.
+
+
+--------------------------------------------------------------------------------
+PASO 3: EXPLORAR Y BUSCAR LIBROS
+--------------------------------------------------------------------------------
+
+En la página principal de Amoxcalli puedes:
+  • BUSCAR: En la barra superior escribe el título de la obra o el nombre del
+    autor (por ejemplo: "Julio Verne", "Kafka", "Quijote", "Poe").
+  • SALAS TEMÁTICAS: Haz clic en las etiquetas para filtrar por género:
+      - Amor y Pasiones
+      - Filosofía y Pensamiento
+      - Ciencia, Física y Naturaleza
+      - Misterio, Terror y Suspenso
+      - Aventura y Ciencia Ficción
+      - Grandes Clásicos Universales
+  • ABRIR UN LIBRO: Haz clic en cualquier portada o tarjeta para comenzar a leer.
+
+
+--------------------------------------------------------------------------------
+PASO 4: HERRAMIENTAS DEL LECTOR DIGITAL
+--------------------------------------------------------------------------------
+
+Cuando abres una obra en el lector, tienes el control total de tu experiencia:
+
+  🎨 MODOS DE COLOR (Botón de Paleta):
+     - Modo Crema (Códice Cálido): Tono sepia suave que no cansa la vista.
+     - Modo Claro: Papel blanco clásico de imprenta.
+     - Modo Oscuro: Fondo negro profundo, ideal para la noche y ahorrar batería.
+
+  🔤 TAMAÑO Y TIPO DE LETRA (Botón "Aa"):
+     - Agranda (A+) o reduce (A-) el texto al tamaño más cómodo para ti.
+     - Elige entre letra Serif (estilo libro clásico), Sans (moderna y limpia)
+       o Monospace.
+
+  📑 ÍNDICE DE CAPÍTULOS:
+     - Toca el botón de menú o índice para saltar directamente a cualquier
+       capítulo de la obra.
+
+  🖍️ SUBRAYADO Y NOTAS (¡Exclusivo en Amoxcalli!):
+     - Selecciona cualquier frase o párrafo con tu dedo en el celular o con el ratón.
+     - Aparecerá un menú con colores de resaltado (amarillo, verde, azul, rosa).
+     - Tus notas y subrayados se guardan automáticamente en tu navegador, por
+       lo que seguirán ahí cada vez que vuelvas a abrir el libro.
+
+  🖥️ PANTALLA COMPLETA:
+     - Presiona el botón de pantalla completa para una inmersión total sin
+       distracciones.
+
+
+--------------------------------------------------------------------------------
+PASO 5: ¿CÓMO SALIR AL TERMINAR?
+--------------------------------------------------------------------------------
+
+  1. Cierra la pestaña de tu navegador.
+  2. En la computadora, cierra la ventana de terminal (o presiona Ctrl + C).
+
+================================================================================
+  Amoxcalli · Iniciativa Plantea · Leer es soñar con los ojos abiertos
+================================================================================

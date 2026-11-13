@@ -1,0 +1,189 @@
+================================================================================
+     AMOXCALLI BASE · GUÍA METODOLÓGICA Y MANUAL PARA DOCENTES
+   Servidor Cultural y Biblioteca Comunitaria de Aula 100% Sin Internet
+================================================================================
+
+¡Bienvenido(a), profesor(a), bibliotecario(a) y promotor(a) de lectura!
+
+Amoxcalli Base es la versión ligera y modular de «La Casa de los Libros»,
+diseñada específicamente para que tú como docente tengas control pedagógico total
+sobre los materiales que pones a disposición de tus alumnos.
+
+A diferencia de las bibliotecas digitales rígidas que imponen cientos de títulos
+que no corresponden a los intereses de tu grupo o al programa de estudios,
+Amoxcalli Base te permite armar tu acervo modularmente:
+  • Descargando únicamente los Paquetes Temáticos Curados que necesitas.
+  • Agregando libros individuales en formato EPUB.
+  • Subiendo tus propias lecturas, guías y documentos en PDF.
+  • Atendiendo hasta 30+ estudiantes en simultáneo por Wi-Fi sin gastar datos.
+
+
+================================================================================
+1. GUÍA PASO A PASO: INTEGRACIÓN DE CONTENIDOS EN AMOXCALLI BASE
+================================================================================
+
+Amoxcalli no utiliza bases de datos complejas ni paneles de administración
+engorrosos. El acervo se administra de forma directa y transparente a través de
+carpetas en tu computadora:
+
+                    Amoxcalli_Base/
+                    ├── iniciar_amoxcalli.bat (Windows)
+                    ├── iniciar_amoxcalli.sh  (Linux/Mac)
+                    └── programa/
+                        └── libros/  <--- [AQUÍ SE ADMINISTRA EL ACERVO]
+
+
+--------------------------------------------------------------------------------
+A) CÓMO INTEGRAR PAQUETES TEMÁTICOS DESCARGADOS (RECOMENDADO)
+--------------------------------------------------------------------------------
+
+En nuestra página web encontrarás los 11 Paquetes Temáticos Oficiales de Plantea,
+cada uno compuesto por 12 obras de alto impacto para Secundaria, Preparatoria,
+lectores principiantes y adultos jóvenes, con portadas HD:
+
+  • Paquete 01: Divulgación Científica, Física y Misterios del Cosmos
+  • Paquete 02: Misterio, Enigmas y Deducción Forense
+  • Paquete 03: Aventura, Supervivencia y Ciencia Ficción
+  • Paquete 04: Emociones, Vínculos y Romance Juvenil
+  • Paquete 05: Estrategia, Filosofía Práctica y Desafíos Mentales
+  • Paquete 06: Crónicas Vivas, Voces de Nuestra Tierra y Leyendas
+  • Paquete 07: Humor, Sátira y Lecturas Express (Puerta de entrada ágil)
+  • Paquete 08: Mitología, Teatro Vivo y Epopeyas
+  • Paquete 09: Fantasía, Mundos Mágicos y Primeros Clásicos
+  • Paquete 10: Crítica Social, Distopías y Dilemas Humanos
+  • Paquete 11: Biografías, Crónicas Reales y Vocación
+
+PASO 1: Descarga el archivo comprimido del paquete deseado (ejemplo:
+        "Paquete_01_Ciencia_Fisica_y_Cosmos.zip").
+
+PASO 2: Descomprime el archivo ZIP en tu computadora (clic derecho -> "Extraer").
+        Obtendrás una carpeta limpia (ejemplo: "01_Ciencia_Fisica_y_Cosmos").
+
+PASO 3: Copia o arrastra esa carpeta completa adentro de:
+            👉 Amoxcalli_Base -> programa -> libros
+
+PASO 4: Si Amoxcalli ya está abierto en tu navegador, presiona la tecla F5
+        (Recargar página). Si está cerrado, ejecútalo normalmente.
+
+¡Eso es todo! El servidor detectará automáticamente la nueva sala temática,
+sus 12 libros, sus portadas, capítulos y metadatos en menos de 5 milisegundos.
+
+
+--------------------------------------------------------------------------------
+B) CÓMO INTEGRAR LIBROS INDIVIDUALES (.EPUB)
+--------------------------------------------------------------------------------
+
+Si en nuestra web descargaste un libro individual o conseguiste una obra en EPUB:
+
+  1. DENTRO DE UNA SALA EXISTENTE:
+     Simplemente copia el archivo .epub dentro de la carpeta temática donde deba
+     estar (ej. meter "El Principito.epub" en "01_Ciencia_Fisica_y_Cosmos").
+
+  2. CREANDO UNA SALA NUEVA:
+     Crea una carpeta en "programa -> libros" con el nombre que desees:
+         programa/libros/07_Historia_Mexicana/
+         programa/libros/Club_de_Lectura_Tercer_Grado/
+         programa/libros/Poesia_Latinoamericana/
+     Copia tus archivos .epub dentro de ella. Amoxcalli tomará el nombre de la
+     carpeta para nombrar la sala temática en el catálogo.
+
+  3. SUELTO EN LA RAÍZ:
+     Si colocas el archivo .epub directamente en "programa -> libros" sin meterlo
+     a ninguna subcarpeta, Amoxcalli lo colocará en la sala "Acervo General".
+
+  * CONSEJO DE NOMENCLATURA:
+    Para que el catálogo se vea impecable, nombra tus archivos con el formato:
+        "Nombre del Autor - Título de la Obra.epub"
+    Ejemplo: "Julio Verne - Viaje al Centro de la Tierra.epub"
+
+
+--------------------------------------------------------------------------------
+C) CÓMO ASIGNAR PORTADAS A TUS LIBROS INDIVIDUALES
+--------------------------------------------------------------------------------
+
+Amoxcalli maneja las portadas con inteligencia automática de doble vía:
+
+  1. Portadas externas acompañantes:
+     Coloca una imagen con el mismo nombre exacto que el libro:
+         "Julio Verne - Viaje al Centro de la Tierra.epub"
+         "Julio Verne - Viaje al Centro de la Tierra.jpg" (o .png / .webp)
+     Amoxcalli priorizará esta imagen para la estantería.
+
+  2. Portadas internas:
+     Si no agregas ninguna imagen externa, Amoxcalli analizará el archivo .epub
+     y extraerá la portada oficial que venga guardada dentro del libro digital.
+
+
+--------------------------------------------------------------------------------
+D) CÓMO INTEGRAR GUÍAS Y LECTURAS EN PDF DEL PROFESOR
+--------------------------------------------------------------------------------
+
+Amoxcalli cuenta con un visor nativo de PDF multihilo de alta velocidad:
+  1. Puedes colocar antologías, guías de estudio, cuentos o reglamentos en .pdf
+     en cualquier carpeta de "programa -> libros".
+  2. Los estudiantes podrán leer el PDF en su teléfono página por página con
+     zoom y lectura fluida, sin necesidad de descargar lectores pesados.
+
+
+--------------------------------------------------------------------------------
+E) CÓMO RETIRAR O ROTAR CONTENIDOS
+--------------------------------------------------------------------------------
+
+Para retirar un libro o archivar un paquete completo al cambiar de bloque escolar:
+  1. Ve a "programa -> libros".
+  2. Borra o mueve la carpeta del paquete fuera de Amoxcalli.
+  3. Recarga la página web en tu navegador. El acervo se actualizará al instante.
+
+
+================================================================================
+2. PUESTA EN MARCHA DEL SERVIDOR DE AULA Y CONEXIÓN DE ALUMNOS
+================================================================================
+
+  1. INICIAR EL SERVIDOR:
+     • En Windows: doble clic en "iniciar_amoxcalli.bat".
+     • En Linux / Mac: doble clic en "iniciar_amoxcalli.sh" (o desde terminal).
+
+  2. CONECTAR AL GRUPO POR WI-FI:
+     • Conecta la computadora del maestro y los teléfonos de los estudiantes a
+       la misma red Wi-Fi (no se necesita internet ni saldo móvil; basta con la
+       señal de un módem o router local).
+     • En la barra superior de Amoxcalli haz clic en el botón con la IP verde o
+       en "Compartir con Alumnos / QR".
+     • Proyecta el código QR o permite que los alumnos lo escaneen desde tu pantalla.
+     • Hasta 30 estudiantes pueden navegar el catálogo y leer en simultáneo.
+
+
+================================================================================
+3. DINÁMICAS PEDAGÓGICAS RECOMENDADAS PARA EL AULA
+================================================================================
+
+  • EL RETO DE LAS TRES PREGUNTAS (Comprensión Crítica):
+    Elige una obra del acervo. Los alumnos leen los primeros 2 capítulos en su
+    teléfono usando el modo Sepia o Crema y subrayan con el marcador digital:
+      1. Amarillo: La motivación oculta del protagonista.
+      2. Azul: El conflicto central de la historia.
+      3. Verde: Una frase memorable que invite a reflexionar.
+
+  • LA ROTACIÓN TEMÁTICA MENSUAL:
+    Dedica cada mes a un paquete temático distinto. En septiembre activa el
+    Paquete 06 (Raíces y Crónicas Vivas), en octubre el Paquete 02 (Misterio y
+    Deducción) y en noviembre el Paquete 01 (Ciencia y Cosmos). De este modo,
+    los alumnos esperan con entusiasmo la apertura de la "nueva sala".
+
+  • DIARIO DE LECTURA DIGITAL:
+    Amoxcalli recuerda automáticamente el avance de lectura y los subrayados
+    en el teléfono de cada alumno mediante almacenamiento local privado,
+    sin necesidad de crear cuentas ni registrar correos electrónicos.
+
+
+================================================================================
+4. PRIVACIDAD TOTAL Y SOBERANÍA EDUCATIVA
+================================================================================
+
+  • 100% Offline: Todo el tráfico de lectura ocurre exclusivamente dentro del salón.
+  • Cero Rastreo: Ningún dato personal, lectura o búsqueda sale de tu computadora.
+  • Sin Anuncios ni Cuotas: Software libre creado para defender el derecho a leer.
+
+================================================================================
+  Amoxcalli Base · Iniciativa Plantea · Tecnología libre para una educación digna
+================================================================================
