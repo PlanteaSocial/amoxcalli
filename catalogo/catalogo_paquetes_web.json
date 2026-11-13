@@ -8,6 +8,35 @@
     "tamano_mb": 29.9,
     "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Base.zip"
   },
+  "ediciones": {
+    "modular": {
+      "nombre": "Amoxcalli Modular",
+      "subtitulo": "Motor vacío + tú eliges qué agregar",
+      "archivo": "Amoxcalli_Base.zip",
+      "total_libros": 0,
+      "tamano_mb": 29.9,
+      "sha256": "a7a74685a54e6c5c3031a74b123ec64b8298fcf93cca19e6c2644b897cb6bf03",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Base.zip"
+    },
+    "medio": {
+      "nombre": "Amoxcalli Peso Medio",
+      "subtitulo": "11 paquetes curados + clásicos ligeros precargados",
+      "archivo": "Amoxcalli_Medio.zip",
+      "total_libros": 200,
+      "tamano_mb": 207.4,
+      "sha256": "d631da6d281b835e38dd7e07bf146dd471f2f580e1466ac6ba7eaf53f5a1f5a0",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Medio.zip"
+    },
+    "completo": {
+      "nombre": "Amoxcalli Completo (Plus)",
+      "subtitulo": "Acervo total sin duplicados (11 paquetes + fondo clásico)",
+      "archivo": "Amoxcalli_Completo.zip",
+      "total_libros": 302,
+      "tamano_mb": 454.35,
+      "sha256": "ffd8f97a1f50cf9a13e5ebfb69c306119225e539ad410d2a086c47e8a3ad7aa7",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Completo.zip"
+    }
+  },
   "total_paquetes": 11,
   "total_libros": 132,
   "paquetes": [
