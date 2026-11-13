@@ -339,8 +339,15 @@ def formatear_texto_pagina(raw_text):
     if not raw_text or not raw_text.strip():
         return (
             "<div class='empty-page-notice'>"
-            "<p>🖼️ <strong>Esta página contiene principalmente ilustraciones, esquemas o texto escaneado.</strong></p>"
-            "<p style='font-size: 0.9em; margin-top: 6px;'>Puedes pulsar el botón <strong>«Vista PDF Original»</strong> en la barra superior para visualizar la lámina exacta.</p>"
+            "<div class='empty-page-icon'>"
+            "<svg width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>"
+            "<rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect>"
+            "<circle cx='8.5' cy='8.5' r='1.5'></circle>"
+            "<polyline points='21 15 16 10 5 21'></polyline>"
+            "</svg>"
+            "</div>"
+            "<p><strong>Esta página contiene principalmente ilustraciones, esquemas o texto escaneado.</strong></p>"
+            "<p style='font-size: 0.9em; margin-top: 6px;'>Puedes pulsar el botón <strong>«PDF Original»</strong> en la barra superior para visualizar la lámina exacta.</p>"
             "</div>"
         )
     lineas = raw_text.splitlines()

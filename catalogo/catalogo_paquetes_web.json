@@ -4,37 +4,37 @@
   "descripcion": "Catálogo modular completo de 11 paquetes temáticos curados de 12 libros EPUB cada uno (132 obras únicas) para Secundaria, Preparatoria, lectores principiantes y Adultos Jóvenes.",
   "repositorio_github": "https://github.com/PlanteaSocial/amoxcalli",
   "base_programa": {
-    "archivo": "Amoxcalli_Base.zip",
-    "tamano_mb": 29.9,
-    "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Base.zip"
+    "archivo": "Amoxcalli_Base_1.2.1.zip",
+    "tamano_mb": 27.58,
+    "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip"
   },
   "ediciones": {
     "modular": {
       "nombre": "Amoxcalli Modular",
       "subtitulo": "Motor vacío + tú eliges qué agregar",
-      "archivo": "Amoxcalli_Base.zip",
+      "archivo": "Amoxcalli_Base_1.2.1.zip",
       "total_libros": 0,
-      "tamano_mb": 29.9,
-      "sha256": "a7a74685a54e6c5c3031a74b123ec64b8298fcf93cca19e6c2644b897cb6bf03",
-      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Base.zip"
+      "tamano_mb": 27.58,
+      "sha256": "83e1252a934da4517a6bba860c6d188bcdb1d447e75d24d1a157101131e76b1d",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip"
     },
     "medio": {
       "nombre": "Amoxcalli Peso Medio",
       "subtitulo": "11 paquetes curados + clásicos ligeros precargados",
-      "archivo": "Amoxcalli_Medio.zip",
+      "archivo": "Amoxcalli_Medio_1.2.1.zip",
       "total_libros": 200,
       "tamano_mb": 207.4,
-      "sha256": "d631da6d281b835e38dd7e07bf146dd471f2f580e1466ac6ba7eaf53f5a1f5a0",
-      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Medio.zip"
+      "sha256": "45a78fcc933d0de5cde04a9f0ae60d3778fce0b32f567e0d1d4460ed6be6a454",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Medio_1.2.1.zip"
     },
     "completo": {
       "nombre": "Amoxcalli Completo (Plus)",
       "subtitulo": "Acervo total sin duplicados (11 paquetes + fondo clásico)",
-      "archivo": "Amoxcalli_Completo.zip",
+      "archivo": "Amoxcalli_Completo_1.2.1.zip",
       "total_libros": 302,
       "tamano_mb": 454.35,
-      "sha256": "ffd8f97a1f50cf9a13e5ebfb69c306119225e539ad410d2a086c47e8a3ad7aa7",
-      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Amoxcalli_Completo.zip"
+      "sha256": "9380540a62de68cc2843d8180c518030485afc2cb5f139d14ea2d813064fa0bb",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Completo_1.2.1.zip"
     }
   },
   "total_paquetes": 11,

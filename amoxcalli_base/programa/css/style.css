@@ -107,6 +107,22 @@ svg {
   flex-shrink: 0;
 }
 
+#icono-tema-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes amox-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.amox-spin {
+  animation: amox-spin 0.85s linear infinite;
+}
+
 /* ============================================================================
    1. BARRA SUPERIOR MINIMALISTA DE 44PX (APPLE GLOBAL NAV)
    ============================================================================ */
@@ -660,6 +676,8 @@ svg {
 }
 
 .book-open-arrow {
+  display: inline-flex;
+  align-items: center;
   color: var(--text-tertiary);
   transition: transform 0.18s ease, color 0.18s ease;
 }
@@ -1017,6 +1035,19 @@ svg {
   border: 1px dashed var(--border-hairline);
   border-radius: 12px;
   font-family: var(--font-sans);
+}
+
+.empty-page-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  margin-bottom: 14px;
 }
 
 .native-pdf-frame {
@@ -1421,7 +1452,7 @@ mark.hl-neon-pink:hover {
 .admin-tabs {
   display: flex;
   gap: 4px;
-  background: var(--bg-surface-secondary, rgba(0, 0, 0, 0.04));
+  background: var(--bg-shelf);
   padding: 4px;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -1429,9 +1460,13 @@ mark.hl-neon-pink:hover {
 
 .admin-tab {
   flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: none;
   border: none;
-  padding: 8px 12px;
+  padding: 8px 10px;
   font-size: 12.5px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -1439,6 +1474,8 @@ mark.hl-neon-pink:hover {
   cursor: pointer;
   transition: all 0.15s ease;
   text-align: center;
+  font-family: inherit;
+  white-space: nowrap;
 }
 
 .admin-tab:hover {
@@ -1446,10 +1483,10 @@ mark.hl-neon-pink:hover {
 }
 
 .admin-tab.active {
-  background: var(--bg-surface, #ffffff);
-  color: var(--accent, #059669);
+  background: var(--bg-card-hover);
+  color: var(--accent-hover);
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .admin-tab-desc {
@@ -1468,25 +1505,28 @@ mark.hl-neon-pink:hover {
 }
 
 .admin-dropzone {
-  border: 2px dashed var(--border-color, #cbd5e1);
+  border: 2px dashed var(--border-input);
   border-radius: 14px;
   padding: 32px 20px;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: var(--bg-surface-secondary, rgba(0, 0, 0, 0.02));
+  background: var(--bg-shelf);
   position: relative;
 }
 
 .admin-dropzone:hover,
 .admin-dropzone.dragover {
-  border-color: var(--accent, #059669);
-  background: var(--accent-soft, rgba(16, 185, 129, 0.06));
+  border-color: var(--accent);
+  background: var(--accent-soft);
   transform: scale(1.005);
 }
 
 .dropzone-icon {
-  color: var(--accent, #059669);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
@@ -1507,16 +1547,31 @@ mark.hl-neon-pink:hover {
   display: none;
 }
 
+.dropzone-selected-info,
+.admin-file-selected {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  word-break: break-word;
+}
+
+.dropzone-selected-info svg,
+.admin-file-selected svg {
+  color: var(--accent);
+}
+
 .dropzone-selected-info {
   margin-top: 14px;
   padding: 8px 14px;
-  background: var(--bg-surface, #ffffff);
-  border: 1px solid var(--border-color, #e2e8f0);
-  border-radius: 8px;
   font-size: 13px;
-  font-weight: 500;
-  color: var(--accent, #059669);
-  display: inline-block;
 }
 
 .admin-form-group {
@@ -1537,20 +1592,44 @@ mark.hl-neon-pink:hover {
   width: 100%;
   box-sizing: border-box;
   padding: 8px 12px;
-  border: 1px solid var(--border-color, #cbd5e1);
+  border: 1px solid var(--border-input);
   border-radius: 8px;
-  background: var(--bg-surface, #ffffff);
+  background: var(--bg-shelf);
   color: var(--text-primary);
   font-size: 13.5px;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+.admin-input-file::file-selector-button {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-input);
+  border-radius: 6px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-input-file::file-selector-button:hover {
+  border-color: var(--accent);
+}
+
+.admin-select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.admin-input-file:focus,
 .admin-select:focus,
 .admin-text-input:focus {
-  border-color: var(--accent, #059669);
-  box-shadow: 0 0 0 3px var(--accent-soft, rgba(16, 185, 129, 0.15));
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .admin-status-box {
@@ -1580,6 +1659,24 @@ mark.hl-neon-pink:hover {
   border: 1px solid #bfdbfe;
 }
 
+[data-theme="dark"] .admin-status-box.success {
+  background: rgba(16, 185, 129, 0.14);
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+[data-theme="dark"] .admin-status-box.error {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+[data-theme="dark"] .admin-status-box.loading {
+  background: rgba(41, 151, 255, 0.15);
+  color: #93c5fd;
+  border-color: rgba(41, 151, 255, 0.35);
+}
+
 .admin-salas-list {
   max-height: 320px;
   overflow-y: auto;
@@ -1594,8 +1691,8 @@ mark.hl-neon-pink:hover {
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: var(--bg-surface-secondary, rgba(0, 0, 0, 0.02));
-  border: 1px solid var(--border-color, #e2e8f0);
+  background: var(--bg-shelf);
+  border: 1px solid var(--border-hairline);
   border-radius: 10px;
 }
 
@@ -1617,18 +1714,120 @@ mark.hl-neon-pink:hover {
 }
 
 .admin-btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   background: #fee2e2;
   color: #dc2626;
   border: 1px solid #fca5a5;
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 6px;
   font-size: 11.5px;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
   transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .admin-btn-delete {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.35);
 }
 
 .admin-btn-delete:hover {
   background: #dc2626;
   color: #ffffff;
+}
+
+/* Estado vacío inicial (Amoxcalli Base sin obras) */
+.empty-library-state {
+  text-align: center;
+  padding: 52px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.empty-library-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.empty-library-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.empty-library-desc {
+  font-size: 14.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.empty-library-guide {
+  background: var(--bg-card);
+  border: 1.5px dashed var(--border-input);
+  border-radius: 16px;
+  padding: 22px 26px;
+  text-align: left;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  box-shadow: var(--card-shadow);
+}
+
+.empty-library-guide > strong {
+  color: var(--text-primary);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.empty-library-guide ol {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.empty-library-guide li + li {
+  margin-top: 6px;
+}
+
+.empty-library-code {
+  display: inline-block;
+  margin-top: 4px;
+  background: var(--bg-shelf);
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.empty-library-cta {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.empty-library-cta .sf-btn {
+  height: 36px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+@media (max-width: 560px) {
+  .admin-tabs {
+    flex-direction: column;
+  }
 }
