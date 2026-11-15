@@ -70,16 +70,6 @@
         <span class="btn-label">Subrayar</span>
       </button>
 
-      <!-- Botón Desubrayar / Borrador (Icono Vectorial) -->
-      <button id="btn-desubrayar" class="sf-btn subtle-outline" title="Quitar subrayado seleccionado (o haz clic directo sobre cualquier texto subrayado)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"></path>
-          <path d="M22 21H7"></path>
-          <path d="m5 11 9 9"></path>
-        </svg>
-        <span class="btn-label">Desubrayar</span>
-      </button>
-
       <!-- Botón Crear Divisor / Marcapáginas -->
       <button id="btn-crear-divisor" class="sf-btn primary" title="Guardar divisor / marcapáginas en esta página">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -96,6 +86,46 @@
         </svg>
         <span class="btn-label" id="label-modo-pdf">PDF Original</span>
       </button>
+
+      <!-- Lectura en Voz Alta Offline · Ola 1 (Web Speech API) -->
+      <div class="tts-wrap" id="wrap-voz-alta">
+        <button id="btn-voz-alta" class="sf-btn subtle-outline" title="Lectura en voz alta offline (Ola 1)" aria-expanded="false" aria-controls="popover-voz-alta">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+          </svg>
+          <span class="btn-label" id="label-btn-voz-alta">Escuchar</span>
+        </button>
+
+        <div id="popover-voz-alta" class="appearance-popover tts-popover" role="region" aria-label="Controles de lectura en voz alta">
+          <div class="tts-popover-head">
+            <span class="tts-popover-title">Lectura en voz alta</span>
+            <span id="tts-estado-badge" class="tts-status-badge">Listo</span>
+          </div>
+          <div class="pop-row">
+            <button id="btn-tts-play-pause" class="sf-btn primary tts-ctrl-btn" title="Iniciar lectura en voz alta">
+              <span id="icono-tts-play-pause" class="tts-btn-icon" aria-hidden="true"></span>
+              <span id="label-tts-play-pause">Leer</span>
+            </button>
+            <button id="btn-tts-stop" class="sf-btn subtle-outline tts-ctrl-btn" title="Detener lectura" disabled>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="5" y="5" width="14" height="14" rx="2"></rect>
+              </svg>
+              <span>Detener</span>
+            </button>
+          </div>
+          <div class="tts-speed-block">
+            <span class="tts-sublabel">Velocidad</span>
+            <div class="pop-row tts-rate-row">
+              <button class="pop-seg-btn tts-rate-btn" data-tts-rate="0.8">0.8x</button>
+              <button class="pop-seg-btn tts-rate-btn active" data-tts-rate="1">1x</button>
+              <button class="pop-seg-btn tts-rate-btn" data-tts-rate="1.25">1.25x</button>
+              <button class="pop-seg-btn tts-rate-btn" data-tts-rate="1.5">1.5x</button>
+            </div>
+          </div>
+          <div id="tts-voz-info" class="tts-voice-meta">Motor local sin conexión (Ola 1)</div>
+        </div>
+      </div>
 
       <!-- Popover de Apariencia Tipográfica (Aa - Idéntico a Celer Libre) -->
       <div class="appearance-wrap">
@@ -233,8 +263,20 @@
     </div>
   </div>
 
+  <!-- Mini menú contextual para confirmar borrado de texto subrayado -->
+  <div id="popover-borrar-subrayado" class="hl-context-popover" role="dialog" aria-label="Opciones de subrayado">
+    <button type="button" id="btn-confirmar-borrar-hl" class="hl-context-delete-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+      </svg>
+      <span>Borrar sección subrayada</span>
+    </button>
+  </div>
+
   <div id="toast-visor" class="toast-notice"></div>
 
+  <script src="js/tts-piper.js"></script>
   <script src="js/visor.js"></script>
 </body>
 </html>

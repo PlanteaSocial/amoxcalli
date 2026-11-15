@@ -599,6 +599,72 @@ def escanear_libros():
     return catalogo
 
 
+TTS_ARCHIVOS_REQUERIDOS = (
+    "ort.wasm.min.js",
+    "ort-wasm-simd.wasm",
+    "piper_phonemize.js",
+    "piper_phonemize.wasm",
+    "piper_phonemize.data",
+)
+
+
+def obtener_estado_tts_local():
+    """Inspecciona si el respaldo neuronal Piper WASM y un modelo .onnx están disponibles offline."""
+    no_disponible = {
+        "disponible": False,
+        "motor": "piper-wasm",
+        "modelo": None,
+        "idioma": None,
+        "etiqueta": None,
+        "archivos": None,
+    }
+    dir_tts = os.path.join(DIRECTORIO_BASE, "tts")
+    if not os.path.isdir(dir_tts):
+        return dict(no_disponible)
+
+    if any(not os.path.isfile(os.path.join(dir_tts, req)) for req in TTS_ARCHIVOS_REQUERIDOS):
+        return dict(no_disponible)
+
+    candidatos_onnx = sorted(
+        f for f in os.listdir(dir_tts)
+        if f.endswith(".onnx")
+        and os.path.isfile(os.path.join(dir_tts, f))
+        and os.path.isfile(os.path.join(dir_tts, f"{f}.json"))
+    )
+    if not candidatos_onnx:
+        return dict(no_disponible)
+
+    archivo_modelo = "es_MX-claude-high.onnx" if "es_MX-claude-high.onnx" in candidatos_onnx else candidatos_onnx[0]
+    archivo_config = f"{archivo_modelo}.json"
+    nombre_modelo = archivo_modelo[:-5]
+    idioma = "es_MX"
+    try:
+        with open(os.path.join(dir_tts, archivo_config), "r", encoding="utf-8") as fh:
+            meta = json.load(fh)
+        lang_obj = meta.get("language") or {}
+        espeak_obj = meta.get("espeak") or {}
+        idioma = lang_obj.get("code") or espeak_obj.get("voice") or nombre_modelo.split("-")[0]
+    except Exception:
+        pass
+
+    return {
+        "disponible": True,
+        "motor": "piper-wasm",
+        "modelo": nombre_modelo,
+        "idioma": idioma,
+        "etiqueta": f"Voz neuronal {idioma} (offline)",
+        "archivos": {
+            "ortJs": "/tts/ort.wasm.min.js",
+            "ortWasmSimd": "/tts/ort-wasm-simd.wasm",
+            "phonemizeJs": "/tts/piper_phonemize.js",
+            "phonemizeWasm": "/tts/piper_phonemize.wasm",
+            "phonemizeData": "/tts/piper_phonemize.data",
+            "modelo": f"/tts/{urllib.parse.quote(archivo_modelo)}",
+            "config": f"/tts/{urllib.parse.quote(archivo_config)}",
+        },
+    }
+
+
 ADIVINAR_MIME = {
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
@@ -611,6 +677,16 @@ ADIVINAR_MIME = {
 
 
 class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
+    extensions_map = {
+        **http.server.SimpleHTTPRequestHandler.extensions_map,
+        ".wasm": "application/wasm",
+        ".js": "application/javascript",
+        ".mjs": "application/javascript",
+        ".json": "application/json",
+        ".onnx": "application/octet-stream",
+        ".data": "application/octet-stream",
+    }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORIO_BASE, **kwargs)
 
@@ -667,6 +743,11 @@ class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
                 "es_anfitrion": self.es_cliente_local(),
             }
             self.enviar_json(info)
+            return
+
+        # 2b. API: Estado del respaldo neuronal de lectura en voz alta (Piper WASM offline)
+        if ruta == "/api/tts/estado":
+            self.enviar_json(obtener_estado_tts_local())
             return
 
         # 3. API: Estructura interna y tabla de contenidos de un EPUB

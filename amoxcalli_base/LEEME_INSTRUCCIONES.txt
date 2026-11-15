@@ -8,7 +8,7 @@
 Amoxcalli Base es la versión ligera y modular de la biblioteca cultural y
 servidor de lectura digital comunitaria de la Iniciativa Plantea.
 
-A diferencia de la versión completa (que viene pre-cargada con 205 libros),
+A diferencia de la versión completa (que viene pre-cargada con 302 libros),
 Amoxcalli Base viene LIMPIO y ultraligero para que cada profesor, mediador o
 comunidad educativa arme su acervo exactamente a la medida de sus estudiantes,
 integrando los paquetes temáticos descargados de nuestra página web o sus propios

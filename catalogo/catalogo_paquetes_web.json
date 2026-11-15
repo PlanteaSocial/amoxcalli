@@ -1,40 +1,40 @@
 {
-  "version": "3.0",
+  "version": "3.1",
   "proyecto": "Iniciativa Plantea — Amoxcalli",
   "descripcion": "Catálogo modular completo de 11 paquetes temáticos curados de 12 libros EPUB cada uno (132 obras únicas) para Secundaria, Preparatoria, lectores principiantes y Adultos Jóvenes.",
   "repositorio_github": "https://github.com/PlanteaSocial/amoxcalli",
   "base_programa": {
-    "archivo": "Amoxcalli_Base_1.2.1.zip",
-    "tamano_mb": 27.58,
-    "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip"
+    "archivo": "Amoxcalli_Base_1.3.zip",
+    "tamano_mb": 27.6,
+    "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip"
   },
   "ediciones": {
     "modular": {
       "nombre": "Amoxcalli Modular",
       "subtitulo": "Motor vacío + tú eliges qué agregar",
-      "archivo": "Amoxcalli_Base_1.2.1.zip",
+      "archivo": "Amoxcalli_Base_1.3.zip",
       "total_libros": 0,
-      "tamano_mb": 27.58,
-      "sha256": "83e1252a934da4517a6bba860c6d188bcdb1d447e75d24d1a157101131e76b1d",
-      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip"
+      "tamano_mb": 27.6,
+      "sha256": "f356b5b1ca1d5a90604ec901cf71a14f32139e0f0a8671e5b7195745ee9def02",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip"
     },
     "medio": {
       "nombre": "Amoxcalli Peso Medio",
-      "subtitulo": "11 paquetes curados + clásicos ligeros precargados",
-      "archivo": "Amoxcalli_Medio_1.2.1.zip",
+      "subtitulo": "11 paquetes curados + clásicos ligeros + Lectura en Voz Alta Offline (Piper WASM es_MX)",
+      "archivo": "Amoxcalli_Medio_1.3.zip",
       "total_libros": 200,
-      "tamano_mb": 207.4,
-      "sha256": "45a78fcc933d0de5cde04a9f0ae60d3778fce0b32f567e0d1d4460ed6be6a454",
-      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Medio_1.2.1.zip"
+      "tamano_mb": 272.24,
+      "sha256": "e962c39b2f5893205bb6564f46ca4c05e235826ea21e30d9df393b2273e04e04",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Medio_1.3.zip"
     },
     "completo": {
       "nombre": "Amoxcalli Completo (Plus)",
-      "subtitulo": "Acervo total sin duplicados (11 paquetes + fondo clásico)",
-      "archivo": "Amoxcalli_Completo_1.2.1.zip",
+      "subtitulo": "Acervo total sin duplicados (302 obras) + Lectura en Voz Alta Offline (Piper WASM es_MX)",
+      "archivo": "Amoxcalli_Completo_1.3.zip",
       "total_libros": 302,
-      "tamano_mb": 454.35,
-      "sha256": "9380540a62de68cc2843d8180c518030485afc2cb5f139d14ea2d813064fa0bb",
-      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Completo_1.2.1.zip"
+      "tamano_mb": 514.14,
+      "sha256": "d344d227a3d06283cad91192f565b7117caf37ba24bbe5ffc3359d13fa0585d1",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Completo_1.3.zip"
     }
   },
   "total_paquetes": 11,
@@ -2691,5 +2691,23 @@
       "zip_tamano_mb": 11.15,
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2/Paquete_11_Biografias_Viajes_y_Vocacion.zip"
     }
-  ]
+  ],
+  "celer": {
+    "base": {
+      "nombre": "Celer Base v1.3",
+      "archivo": "Celer_Base_1.3.zip",
+      "tamano_mb": 27.8,
+      "sha256": "5ed4daeea8cbdef541488fc9ede8f1e8b053a2b15fd678fe3ce78b596c3aa867",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Base_1.3.zip"
+    },
+    "campo_y_salud": {
+      "nombre": "Celer Campo y Salud v1.3",
+      "archivo": "Celer_Campo_y_Salud_1.3.zip",
+      "documentos": 23,
+      "fichas": 8911,
+      "tamano_mb": 57.38,
+      "sha256": "77373a41815e8d647c1d6c83d15f880434ada94a4be271b96b34cf17178d9400",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Campo_y_Salud_1.3.zip"
+    }
+  }
 }
