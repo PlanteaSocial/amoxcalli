@@ -1,6 +1,7 @@
 (function (global) {
   "use strict";
 
+  const CACHE_PIPER_NOMBRE = "amoxcalli-piper-v1";
   const scriptsCargados = new Map();
   let estadoRemotoCache = null;
   let estadoPromesaEnCurso = null;
@@ -9,8 +10,11 @@
   let ortSession = null;
   let modelConfig = null;
   let phonemizeWasmModule = null;
+  let phonemizeModulePromesa = null;
   let phonemizeWasmBytes = null;
   let phonemizeDataBuf = null;
+  let onPhonemizePrint = null;
+  let onPhonemizeErr = null;
   let colaSerializada = Promise.resolve();
 
   function cargarScriptSiFalta(src, verificarGlobal) {
@@ -48,11 +52,40 @@
     return promesa;
   }
 
-  async function fetchArrayBufferLocal(url, etiqueta) {
-    const res = await fetch(url, { cache: "no-store" });
+  async function fetchConCachePersistente(url, etiqueta) {
+    if (typeof global.caches !== "undefined" && global.caches && typeof global.caches.open === "function") {
+      try {
+        const cache = await global.caches.open(CACHE_PIPER_NOMBRE);
+        const enCache = await cache.match(url);
+        if (enCache && enCache.ok) {
+          return enCache;
+        }
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`Error al cargar ${etiqueta} (${res.status})`);
+        }
+        try {
+          await cache.put(url, res.clone());
+        } catch (_) {
+          // Ignorar errores de cuota o almacenamiento privado; el recurso ya se descargó
+        }
+        return res;
+      } catch (err) {
+        if (err && String(err.message || "").startsWith("Error al cargar ")) {
+          throw err;
+        }
+      }
+    }
+
+    const res = await fetch(url);
     if (!res.ok) {
       throw new Error(`Error al cargar ${etiqueta} (${res.status})`);
     }
+    return res;
+  }
+
+  async function fetchArrayBufferLocal(url, etiqueta) {
+    const res = await fetchConCachePersistente(url, etiqueta);
     return res.arrayBuffer();
   }
 
@@ -109,10 +142,7 @@
       if (typeof onFase === "function") onFase("descargando");
 
       const [resConfig, modeloBuf, wasmBuf, dataBuf] = await Promise.all([
-        fetch(archivos.config, { cache: "no-store" }).then((r) => {
-          if (!r.ok) throw new Error(`HTTP ${r.status} al leer config de voz`);
-          return r.json();
-        }),
+        fetchConCachePersistente(archivos.config, "configuración de voz").then((r) => r.json()),
         fetchArrayBufferLocal(archivos.modelo, "modelo neuronal"),
         fetchArrayBufferLocal(archivos.phonemizeWasm, "módulo fonemizador WASM"),
         fetchArrayBufferLocal(archivos.phonemizeData, "datos fonéticos eSpeak"),
@@ -141,8 +171,10 @@
       modelConfig = resConfig;
       phonemizeWasmBytes = wasmBuf;
       phonemizeWasmModule = null;
+      phonemizeModulePromesa = null;
       phonemizeDataBuf = dataBuf;
       ortSession = session;
+      await asegurarModuloPhonemize();
     })().catch((err) => {
       cargaPromesaEnCurso = null;
       throw err;
@@ -157,45 +189,85 @@
     }
   }
 
+  async function asegurarModuloPhonemize() {
+    if (phonemizeWasmModule) {
+      return phonemizeWasmModule;
+    }
+    if (phonemizeModulePromesa) {
+      return phonemizeModulePromesa;
+    }
+
+    phonemizeModulePromesa = (async () => {
+      const opts = {
+        noExitRuntime: true,
+        print: (linea) => {
+          if (typeof onPhonemizePrint === "function") {
+            onPhonemizePrint(linea);
+          }
+        },
+        printErr: (msg) => {
+          if (typeof onPhonemizeErr === "function") {
+            onPhonemizeErr(msg);
+          }
+        },
+        getPreloadedPackage: () => phonemizeDataBuf.slice(0),
+        locateFile: (url) => {
+          if (estadoRemotoCache && estadoRemotoCache.archivos) {
+            if (url.endsWith(".wasm")) return estadoRemotoCache.archivos.phonemizeWasm;
+            if (url.endsWith(".data")) return estadoRemotoCache.archivos.phonemizeData;
+          }
+          return url;
+        },
+      };
+      crearOpcionesWasmPhonemize(opts);
+      const mod = await global.createPiperPhonemize(opts);
+      phonemizeWasmModule = mod;
+      return mod;
+    })().catch((err) => {
+      phonemizeModulePromesa = null;
+      throw err;
+    });
+
+    return phonemizeModulePromesa;
+  }
+
   async function fonemizarTexto(texto, espeakVoice) {
     const errores = [];
     let phonemeIds = null;
+    const mod = await asegurarModuloPhonemize();
 
-    const opts = {
-      print: (linea) => {
-        if (phonemeIds !== null) return;
-        try {
-          const parsed = JSON.parse(linea);
-          if (Array.isArray(parsed.phoneme_ids)) {
-            phonemeIds = parsed.phoneme_ids;
-          }
-        } catch {
-          // Ignorar líneas informativas que no sean JSON de fonemas
+    onPhonemizePrint = (linea) => {
+      if (phonemeIds !== null) return;
+      try {
+        const parsed = JSON.parse(linea);
+        if (Array.isArray(parsed.phoneme_ids)) {
+          phonemeIds = parsed.phoneme_ids;
         }
-      },
-      printErr: (msg) => {
-        errores.push(String(msg));
-      },
-      getPreloadedPackage: () => phonemizeDataBuf.slice(0),
-      locateFile: (url) => {
-        if (estadoRemotoCache && estadoRemotoCache.archivos) {
-          if (url.endsWith(".wasm")) return estadoRemotoCache.archivos.phonemizeWasm;
-          if (url.endsWith(".data")) return estadoRemotoCache.archivos.phonemizeData;
-        }
-        return url;
-      },
+      } catch {
+        // Ignorar líneas informativas que no sean JSON de fonemas
+      }
     };
-    crearOpcionesWasmPhonemize(opts);
+    onPhonemizeErr = (msg) => {
+      errores.push(String(msg));
+    };
 
-    const mod = await global.createPiperPhonemize(opts);
-    mod.callMain([
-      "-l",
-      espeakVoice || "es-419",
-      "--input",
-      JSON.stringify([{ text: texto }]),
-      "--espeak_data",
-      "/espeak-ng-data",
-    ]);
+    try {
+      mod.callMain([
+        "-l",
+        espeakVoice || "es-419",
+        "--input",
+        JSON.stringify([{ text: texto }]),
+        "--espeak_data",
+        "/espeak-ng-data",
+      ]);
+    } catch (err) {
+      phonemizeWasmModule = null;
+      phonemizeModulePromesa = null;
+      throw err;
+    } finally {
+      onPhonemizePrint = null;
+      onPhonemizeErr = null;
+    }
 
     if (!Array.isArray(phonemeIds)) {
       throw new Error(`Error al fonemizar texto: ${errores.join(" | ") || "sin salida"}`);

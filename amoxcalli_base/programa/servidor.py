@@ -13,12 +13,15 @@ from collections import OrderedDict
 import html
 import http.server
 import io
+import ipaddress
 import json
 import os
 import posixpath
 import re
+import secrets
 import shutil
 import socket
+import subprocess
 import sys
 import threading
 import time
@@ -49,6 +52,7 @@ except ImportError:
 PUERTO_BASE = 8080
 PUERTO_ACTIVO = 8080
 DIRECTORIO_BASE = DIR_ACTUAL
+ADMIN_SESSION_TOKEN = secrets.token_urlsafe(32)
 
 # Resolver carpeta de acervo: soporta programa/libros o carpeta raíz libros/
 _candidatos_libros = [
@@ -69,20 +73,73 @@ _EPUB_META_CACHE = OrderedDict()   # ruta_completa -> (mtime, dict_meta)
 MAX_CACHE_ABIERTOS = 16
 
 
-def obtener_ip_local():
-    """Detecta la IP local de la computadora para compartir en la red Wi-Fi o aula."""
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+def _es_ip_privada_lan(ip):
+    """Verifica si una IPv4 es privada de LAN (192.168.x.x, 10.x.x.x, 172.16-31.x.x)."""
+    if not ip:
+        return False
     try:
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
-    except Exception:
+        addr = ipaddress.ip_address(ip)
+        return (
+            addr.version == 4
+            and addr.is_private
+            and not addr.is_loopback
+            and not addr.is_link_local
+            and not addr.is_unspecified
+        )
+    except ValueError:
+        return False
+
+
+def obtener_ip_local():
+    """Detecta la IP local de la computadora para compartir en la red Wi-Fi o aula (100% offline)."""
+    # 1. Probar rutas de red privada y ruta por defecto mediante socket UDP (no envía paquetes)
+    objetivos = [
+        ("10.255.255.255", 1),
+        ("192.168.255.255", 1),
+        ("172.31.255.255", 1),
+        ("192.168.0.1", 80),
+        ("192.168.1.1", 80),
+        ("8.8.8.8", 80),
+    ]
+    for host, puerto in objetivos:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         try:
-            ip = socket.gethostbyname(socket.gethostname())
+            s.settimeout(0.2)
+            s.connect((host, puerto))
+            ip = s.getsockname()[0]
+            if _es_ip_privada_lan(ip):
+                return ip
         except Exception:
-            ip = "127.0.0.1"
-    finally:
-        s.close()
-    return ip
+            pass
+        finally:
+            s.close()
+
+    # 2. Resolución local del hostname
+    try:
+        for info in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET):
+            ip = info[4][0]
+            if _es_ip_privada_lan(ip):
+                return ip
+    except Exception:
+        pass
+
+    # 3. Enumeración rápida de interfaces de red sin bloquear
+    comandos = (
+        ["ip", "-4", "-o", "addr", "show", "scope", "global"],
+        ["hostname", "-I"],
+        ["ifconfig"],
+    )
+    for cmd in comandos:
+        try:
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=1.5)
+            if res.returncode == 0 and res.stdout:
+                for candidato in re.findall(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", res.stdout):
+                    if _es_ip_privada_lan(candidato):
+                        return candidato
+        except Exception:
+            pass
+
+    return "127.0.0.1"
 
 
 def limpiar_nombre_coleccion(nombre_carpeta):
@@ -115,16 +172,24 @@ def resolver_ruta_libro(rel_archivo):
     Resuelve de forma segura la ruta relativa de un libro dentro de CARPETA_LIBROS,
     previniendo ataques de Path Traversal (../).
     """
-    if not rel_archivo:
+    if not rel_archivo or not isinstance(rel_archivo, str):
         return None
     rel_limpio = rel_archivo.replace("\\", "/").lstrip("/")
-    ruta_candidata = os.path.normpath(os.path.join(CARPETA_LIBROS, rel_limpio))
-    base_norm = os.path.normpath(CARPETA_LIBROS)
-    if not ruta_candidata.startswith(base_norm):
+    if not rel_limpio:
         return None
-    if not os.path.isfile(ruta_candidata):
+    partes = rel_limpio.split("/")
+    if any(p in ("", ".", "..") for p in partes):
         return None
-    return ruta_candidata
+    base_abs = os.path.realpath(CARPETA_LIBROS)
+    target_abs = os.path.realpath(os.path.join(base_abs, *partes))
+    try:
+        if os.path.commonpath([base_abs, target_abs]) != base_abs or target_abs == base_abs:
+            return None
+    except ValueError:
+        return None
+    if not os.path.isfile(target_abs):
+        return None
+    return target_abs
 
 
 def obtener_pdf_reader(ruta_pdf):
@@ -316,13 +381,38 @@ def reescribir_recursos_html_epub(html_str, rel_archivo, href_capitulo):
     cap_dir = posixpath.dirname(href_capitulo)
     archivo_q = urllib.parse.quote(rel_archivo)
 
-    # Eliminar etiquetas <script> por seguridad
-    html_limpio = re.sub(r"<script\b[^<]*(?:(?!</script>)<[^<]*)*</script>", "", html_str, flags=re.IGNORECASE)
+    # Eliminar etiquetas peligrosas y manejadores de eventos / esquemas inseguros por seguridad
+    html_limpio = re.sub(
+        r"<(script|iframe|object|embed|form)\b[^>]*>.*?</\1\s*>",
+        "",
+        html_str,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    html_limpio = re.sub(
+        r"<(?:script|iframe|object|embed|form)\b[^>]*>",
+        "",
+        html_limpio,
+        flags=re.IGNORECASE,
+    )
+    html_limpio = re.sub(
+        r"""\s+on[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)""",
+        "",
+        html_limpio,
+        flags=re.IGNORECASE,
+    )
+    html_limpio = re.sub(
+        r"""((?:href|src|xlink:href|action|data|formaction)\s*=\s*["']?\s*)(?:javascript|vbscript)\s*:[^"'>\s]*""",
+        r"\1#",
+        html_limpio,
+        flags=re.IGNORECASE,
+    )
 
     def _reemplazar_src(match):
         prefijo = match.group(1)
         comilla = match.group(2)
         url_orig = match.group(3).strip()
+        if url_orig.lower().startswith(("javascript:", "vbscript:")):
+            return f"{prefijo}{comilla}#{comilla}"
         if url_orig.startswith(("http://", "https://", "data:", "/api/")):
             return match.group(0)
         url_sin_hash = url_orig.split("#")[0]
@@ -673,6 +763,8 @@ ADIVINAR_MIME = {
     ".svg": "image/svg+xml",
     ".webp": "image/webp",
     ".css": "text/css",
+    ".pdf": "application/pdf",
+    ".epub": "application/epub+zip",
 }
 
 
@@ -694,17 +786,47 @@ class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
         # Silenciar logs ruidosos por cada recurso para mantener la consola limpia y rápida
         pass
 
+    def send_response(self, code, message=None):
+        self._ultimo_codigo_http = code
+        super().send_response(code, message)
+
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Range, Content-Type")
-        self.send_header("Cache-Control", "no-cache, must-revalidate")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Range, Content-Type, X-Amoxcalli-Admin-Token, X-Nombre-Archivo")
+        tiene_cache_control = any(
+            h.lower().startswith(b"cache-control:")
+            for h in getattr(self, "_headers_buffer", [])
+        )
+        if not tiene_cache_control:
+            ruta_actual = urllib.parse.urlparse(getattr(self, "path", "")).path
+            if ruta_actual.startswith("/tts/") and getattr(self, "_ultimo_codigo_http", 200) == 200:
+                self.send_header("Cache-Control", "public, max-age=31536000, immutable")
+            else:
+                self.send_header("Cache-Control", "no-cache, must-revalidate")
         super().end_headers()
 
     def es_cliente_local(self):
         """Verifica si la petición proviene de la máquina anfitriona (localhost)."""
         cliente_ip = self.client_address[0]
         return cliente_ip in ("127.0.0.1", "::1", "localhost")
+
+    def verificar_autorizacion_admin(self):
+        """Valida que la petición admin provenga de localhost y porte el token de sesión CSRF."""
+        if not self.es_cliente_local():
+            self.enviar_json({
+                "ok": False,
+                "error": "Acción no autorizada: Solo la computadora anfitriona del profesor (localhost) puede administrar el acervo."
+            }, 403)
+            return False
+        token_req = self.headers.get("X-Amoxcalli-Admin-Token", "")
+        if not token_req or not secrets.compare_digest(token_req, ADMIN_SESSION_TOKEN):
+            self.enviar_json({
+                "ok": False,
+                "error": "Acción rechazada: token de sesión de administración inválido o ausente."
+            }, 403)
+            return False
+        return True
 
     def enviar_json(self, datos, codigo=200):
         resp = json.dumps(datos, ensure_ascii=False).encode("utf-8")
@@ -730,6 +852,7 @@ class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
             ip_lan = obtener_ip_local()
             libros = escanear_libros()
             colecciones = sorted(list({b.get("coleccion", "Acervo General") for b in libros}))
+            es_local = self.es_cliente_local()
             info = {
                 "proyecto": "Amoxcalli",
                 "iniciativa": "Iniciativa Plantea",
@@ -740,8 +863,10 @@ class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
                 "url_lan": f"http://{ip_lan}:{PUERTO_ACTIVO}",
                 "total_libros": len(libros),
                 "colecciones": colecciones,
-                "es_anfitrion": self.es_cliente_local(),
+                "es_anfitrion": es_local,
             }
+            if es_local:
+                info["admin_token"] = ADMIN_SESSION_TOKEN
             self.enviar_json(info)
             return
 
@@ -982,13 +1107,26 @@ class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
         # Servicio estático normativo
         super().do_GET()
 
+    def do_DELETE(self):
+        url_p = urllib.parse.urlparse(self.path)
+        ruta = url_p.path
+        if ruta.startswith("/api/admin/"):
+            if not self.verificar_autorizacion_admin():
+                return
+            self.enviar_json({"ok": False, "error": "Ruta DELETE no encontrada."}, 404)
+            return
+        self.enviar_json({"ok": False, "error": "Método no permitido."}, 405)
+
     def do_POST(self):
         url_p = urllib.parse.urlparse(self.path)
         ruta = url_p.path
         params = urllib.parse.parse_qs(url_p.query)
 
-        # Control de seguridad: solo la máquina anfitriona (profesor) puede realizar acciones de administración
-        if not self.es_cliente_local():
+        # Control de seguridad: solo la máquina anfitriona (profesor) con token CSRF puede administrar
+        if ruta.startswith("/api/admin/"):
+            if not self.verificar_autorizacion_admin():
+                return
+        elif not self.es_cliente_local():
             self.enviar_json({
                 "ok": False,
                 "error": "Acción no autorizada: Solo la computadora anfitriona del profesor (localhost) puede administrar el acervo."
@@ -1192,15 +1330,32 @@ class ManejadorBiblioteca(http.server.SimpleHTTPRequestHandler):
                 self.enviar_json({"ok": False, "error": "Parámetro 'coleccion' no especificado."}, 400)
                 return
 
-            col_limpia = re.sub(r'[\/\\:\*\?"<>\|]', '_', urllib.parse.unquote(coleccion)).strip()
-            dir_sala = os.path.join(CARPETA_LIBROS, col_limpia)
+            col_dec = urllib.parse.unquote(coleccion).strip()
+            if not col_dec or col_dec in (".", "..") or "/" in col_dec or "\\" in col_dec:
+                self.enviar_json({"ok": False, "error": "Nombre de sala inválido."}, 400)
+                return
 
-            if not os.path.isdir(dir_sala) or os.path.abspath(dir_sala) == os.path.abspath(CARPETA_LIBROS):
+            col_limpia = re.sub(r'[\/\\:\*\?"<>\|]', '_', col_dec).strip()
+            if not col_limpia or col_limpia in (".", ".."):
+                self.enviar_json({"ok": False, "error": "Nombre de sala inválido."}, 400)
+                return
+
+            base_abs = os.path.realpath(CARPETA_LIBROS)
+            target_abs = os.path.realpath(os.path.join(base_abs, col_limpia))
+            try:
+                if os.path.commonpath([base_abs, target_abs]) != base_abs or target_abs == base_abs:
+                    self.enviar_json({"ok": False, "error": "Ruta de sala fuera del acervo."}, 400)
+                    return
+            except ValueError:
+                self.enviar_json({"ok": False, "error": "Ruta de sala inválida."}, 400)
+                return
+
+            if not os.path.isdir(target_abs):
                 self.enviar_json({"ok": False, "error": "La sala especificada no existe o no se puede eliminar."}, 404)
                 return
 
             try:
-                shutil.rmtree(dir_sala)
+                shutil.rmtree(target_abs)
                 with _CACHE_LOCK:
                     _EPUB_META_CACHE.clear()
                     _CATALOGO_MEMORIA["firma_directorio"] = None

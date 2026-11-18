@@ -5,7 +5,7 @@
   "repositorio_github": "https://github.com/PlanteaSocial/amoxcalli",
   "base_programa": {
     "archivo": "Amoxcalli_Base_1.3.zip",
-    "tamano_mb": 27.6,
+    "tamano_mb": 27.79,
     "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip"
   },
   "ediciones": {
@@ -14,8 +14,8 @@
       "subtitulo": "Motor vacío + tú eliges qué agregar",
       "archivo": "Amoxcalli_Base_1.3.zip",
       "total_libros": 0,
-      "tamano_mb": 27.6,
-      "sha256": "f356b5b1ca1d5a90604ec901cf71a14f32139e0f0a8671e5b7195745ee9def02",
+      "tamano_mb": 27.79,
+      "sha256": "e3173c66656fe61e49d2ac6597f938fba675200fc7636ccb85d59a09c5638391",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip"
     },
     "medio": {
@@ -23,8 +23,8 @@
       "subtitulo": "11 paquetes curados + clásicos ligeros + Lectura en Voz Alta Offline (Piper WASM es_MX)",
       "archivo": "Amoxcalli_Medio_1.3.zip",
       "total_libros": 200,
-      "tamano_mb": 272.24,
-      "sha256": "e962c39b2f5893205bb6564f46ca4c05e235826ea21e30d9df393b2273e04e04",
+      "tamano_mb": 272.37,
+      "sha256": "d233d32da907401f3c0a7be32fe425dd971a6680fdaf8e51e3e6bc7f2e884acd",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Medio_1.3.zip"
     },
     "completo": {
@@ -32,8 +32,8 @@
       "subtitulo": "Acervo total sin duplicados (302 obras) + Lectura en Voz Alta Offline (Piper WASM es_MX)",
       "archivo": "Amoxcalli_Completo_1.3.zip",
       "total_libros": 302,
-      "tamano_mb": 514.14,
-      "sha256": "d344d227a3d06283cad91192f565b7117caf37ba24bbe5ffc3359d13fa0585d1",
+      "tamano_mb": 514.12,
+      "sha256": "89b09cc01fce1adc560304872b75bdbfdb35352012f961ef32a08434d3fa7537",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Completo_1.3.zip"
     }
   },
@@ -2696,8 +2696,9 @@
     "base": {
       "nombre": "Celer Base v1.3",
       "archivo": "Celer_Base_1.3.zip",
-      "tamano_mb": 27.8,
-      "sha256": "5ed4daeea8cbdef541488fc9ede8f1e8b053a2b15fd678fe3ce78b596c3aa867",
+      "tamano_mb": 27.99,
+      "tamano_bytes": 29353511,
+      "sha256": "10c2f51c11f1fe391dd3381c36bda4360bf689e930d51f2e5c0af3a198b0ad78",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Base_1.3.zip"
     },
     "campo_y_salud": {
@@ -2705,8 +2706,9 @@
       "archivo": "Celer_Campo_y_Salud_1.3.zip",
       "documentos": 23,
       "fichas": 8911,
-      "tamano_mb": 57.38,
-      "sha256": "77373a41815e8d647c1d6c83d15f880434ada94a4be271b96b34cf17178d9400",
+      "tamano_mb": 57.62,
+      "tamano_bytes": 60419022,
+      "sha256": "148b7c403df795d08ff79d16015e1637209ef7f09b6e55931845d904f95afc86",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Campo_y_Salud_1.3.zip"
     }
   }

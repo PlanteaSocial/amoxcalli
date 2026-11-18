@@ -47,10 +47,15 @@ const TTS_MAX_CHARS_POR_FRAGMENTO = 220;
 const SVG_TTS_PLAY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>';
 const SVG_TTS_PAUSE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
 
+const STORAGE_KEY_TTS_MOTOR = "amoxcalli_tts_motor";
+const STORAGE_KEY_TTS_VELOCIDAD = "amoxcalli_tts_velocidad";
+const _ttsVelGuardada = parseFloat(localStorage.getItem(STORAGE_KEY_TTS_VELOCIDAD) || "1");
+const _ttsMotorGuardado = localStorage.getItem(STORAGE_KEY_TTS_MOTOR);
+
 let ttsEstadoLectura = "idle"; // "idle" | "speaking" | "paused"
 let ttsFragmentos = [];
 let ttsIndiceActual = 0;
-let ttsVelocidad = 1;
+let ttsVelocidad = (!Number.isNaN(_ttsVelGuardada) && _ttsVelGuardada >= 0.5 && _ttsVelGuardada <= 2) ? _ttsVelGuardada : 1;
 let ttsSessionId = 0;
 let ttsVocesInicializadas = false;
 let ttsHaIniciadoLectura = false;
@@ -60,7 +65,7 @@ let ttsElementoResaltadoActual = null;
 let ttsVocesFallidas = new Set();
 let ttsAvisoPersistente = null;
 let ttsTemporizadorVocesId = null;
-let ttsMotorPreferido = "auto"; // "auto" | "webspeech" | "piper"
+let ttsMotorPreferido = ["auto", "webspeech", "piper"].includes(_ttsMotorGuardado) ? _ttsMotorGuardado : "auto"; // "auto" | "webspeech" | "piper"
 let ttsMotorActivo = "ninguno"; // "webspeech" | "piper" | "ninguno"
 let ttsEstadoPiper = null;
 let ttsConsultaPiperEnCurso = null;
@@ -1616,6 +1621,8 @@ function inicializarControlesVozAlta() {
   }
 
   document.querySelectorAll(".tts-rate-btn").forEach((btn) => {
+    const val = parseFloat(btn.dataset.ttsRate || "1");
+    btn.classList.toggle("active", Math.abs(val - ttsVelocidad) < 0.01);
     btn.addEventListener("click", () => {
       const rate = parseFloat(btn.dataset.ttsRate || "1");
       if (!Number.isNaN(rate)) {
@@ -1748,6 +1755,7 @@ function actualizarSelectorMotorTts(hayVozNativa, hayPiper) {
         const estabaLeyendo = ttsEstadoLectura !== "idle";
         const idxReanudar = ttsIndiceActual;
         ttsMotorPreferido = op.id;
+        localStorage.setItem(STORAGE_KEY_TTS_MOTOR, ttsMotorPreferido);
         actualizarVozTtsPreferida(false);
         if (estabaLeyendo) {
           detenerLecturaVozAlta({ silencioso: true });
@@ -2531,6 +2539,7 @@ function reanudarLecturaVozAlta() {
 
 function cambiarVelocidadVozAlta(nuevaVelocidad) {
   ttsVelocidad = Math.max(0.5, Math.min(2, nuevaVelocidad));
+  localStorage.setItem(STORAGE_KEY_TTS_VELOCIDAD, String(ttsVelocidad));
   document.querySelectorAll(".tts-rate-btn").forEach((btn) => {
     const val = parseFloat(btn.dataset.ttsRate || "1");
     btn.classList.toggle("active", Math.abs(val - ttsVelocidad) < 0.01);
@@ -2648,7 +2657,7 @@ function actualizarInterfazVozAlta(estadoEtiquetaOpcional) {
     btnStop.disabled = false;
   } else {
     btnPrincipal.classList.remove("is-speaking", "is-paused");
-    btnPrincipal.title = "Lectura en voz alta offline (Ola 1)";
+    btnPrincipal.title = "Lectura en voz alta offline";
     const avisoActivo = !estadoEtiquetaOpcional && ttsAvisoPersistente;
     badge.textContent = estadoEtiquetaOpcional || (avisoActivo ? avisoActivo.badge : "Listo");
     badge.classList.remove("active");

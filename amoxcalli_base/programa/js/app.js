@@ -4,6 +4,7 @@ let filtroFormato = "todos";
 let coleccionActiva = "todas";
 let ordenActual = "coleccion";
 let urlLanActiva = "";
+let adminSessionToken = "";
 
 const TEMAS_CICLO = ["light", "sepia", "dark"];
 const ETIQUETAS_TEMA = {
@@ -208,6 +209,9 @@ async function cargarInformacionRed() {
       actualizarQrLan(info.url_lan);
 
       // Comprobar si este cliente es el anfitrión (computadora del profesor en localhost)
+      if (info && info.es_anfitrion && info.admin_token) {
+        adminSessionToken = info.admin_token;
+      }
       const esLocal = (info && info.es_anfitrion) ||
         ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
       if (btnAdmin && esLocal) {
@@ -221,6 +225,25 @@ async function cargarInformacionRed() {
       btnAdmin.style.display = "inline-flex";
     }
   }
+}
+
+async function obtenerHeadersAdmin(extraHeaders = {}) {
+  if (!adminSessionToken) {
+    try {
+      const res = await fetch("/api/info", { cache: "no-store" });
+      if (res.ok) {
+        const info = await res.json();
+        if (info && info.admin_token) {
+          adminSessionToken = info.admin_token;
+        }
+      }
+    } catch (_) {}
+  }
+  const headers = { ...extraHeaders };
+  if (adminSessionToken) {
+    headers["X-Amoxcalli-Admin-Token"] = adminSessionToken;
+  }
+  return headers;
 }
 
 function actualizarQrLan(url) {
@@ -805,12 +828,13 @@ function configurarModuloAdministracion() {
       setStatus("Subiendo y descomprimiendo paquete en el servidor local... Por favor espera.", "loading");
 
       try {
+        const headersPaquete = await obtenerHeadersAdmin({
+          "Content-Type": "application/zip",
+          "X-Nombre-Archivo": encodeURIComponent(paqueteSeleccionado.name)
+        });
         const res = await fetch("/api/admin/subir_paquete", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/zip",
-            "X-Nombre-Archivo": encodeURIComponent(paqueteSeleccionado.name)
-          },
+          headers: headersPaquete,
           body: paqueteSeleccionado
         });
 
@@ -916,9 +940,10 @@ function configurarModuloAdministracion() {
 
       try {
         const urlLibro = `/api/admin/subir_libro?archivo=${encodeURIComponent(bookFile.name)}&coleccion=${encodeURIComponent(salaElegida)}`;
+        const headersLibro = await obtenerHeadersAdmin({ "Content-Type": "application/octet-stream" });
         const resLibro = await fetch(urlLibro, {
           method: "POST",
-          headers: { "Content-Type": "application/octet-stream" },
+          headers: headersLibro,
           body: bookFile
         });
         const dataLibro = await resLibro.json();
@@ -939,9 +964,10 @@ function configurarModuloAdministracion() {
           const coverName = stem + coverExt;
 
           const urlCover = `/api/admin/subir_libro?archivo=${encodeURIComponent(coverName)}&coleccion=${encodeURIComponent(salaElegida)}`;
+          const headersCover = await obtenerHeadersAdmin({ "Content-Type": "application/octet-stream" });
           await fetch(urlCover, {
             method: "POST",
-            headers: { "Content-Type": "application/octet-stream" },
+            headers: headersCover,
             body: coverFile
           });
         }
@@ -1022,8 +1048,10 @@ function configurarModuloAdministracion() {
         btn.innerHTML = `${SVG_SPINNER}<span>Eliminando...</span>`;
 
         try {
+          const headersDel = await obtenerHeadersAdmin();
           const res = await fetch(`/api/admin/eliminar_sala?coleccion=${encodeURIComponent(colFolder)}`, {
-            method: "POST"
+            method: "POST",
+            headers: headersDel
           });
           const data = await res.json();
           if (res.ok && data.ok) {

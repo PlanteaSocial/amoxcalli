@@ -2,21 +2,21 @@
 
 Biblioteca digital comunitaria **100 % sin internet**, diseñada para escuelas secundarias, preparatorias, centros comunitarios y lectura móvil en red local Wi-Fi (mediante código QR).
 
-- **Descarga directa de Amoxcalli Base (Windows + Linux listo para usar, 27.58 MB):**
-  [`Amoxcalli_Base_1.2.1.zip` (Release v1.2.1)](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip)
+- **Descarga directa de Amoxcalli Base (Windows + Linux listo para usar, 27.79 MB):**
+  [`Amoxcalli_Base_1.3.zip` (Release v1.3)](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip)
 - **Catálogo completo modular:** **11 paquetes temáticos · 132 obras únicas en español** (todos en dominio público), listos para agregarse desde el gestor interno `+ Agregar Obras` de Amoxcalli Base o copiando sus carpetas a `programa/libros/`.
 
 ---
 
-## Ediciones Unificadas (`v1.2.1`)
+## Ediciones Unificadas (`v1.3`)
 
-Todas comparten exactamente el mismo motor limpio (`v1.2.1` con lector offline + `+ Agregar Obras` + servidor QR Wi-Fi) y son estrictamente acumulativas:
+Todas comparten exactamente el mismo motor limpio (`v1.3` con lector offline, lectura en voz alta offline con respaldo neuronal Piper WASM en español `es_MX`, `+ Agregar Obras` y servidor QR Wi-Fi) y son estrictamente acumulativas:
 
 | Edición | Contenido | Obras Únicas | Tamaño ZIP | Descarga Directa |
 | :--- | :--- | :---: | :---: | :--- |
-| 🧩 **Amoxcalli Modular** | Motor limpio vacío (`+ Agregar Obras` desde cero) | 0 | 27.58 MB | [Descargar `Amoxcalli_Base_1.2.1.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip) |
-| 📚 **Amoxcalli Peso Medio** | 11 paquetes curados (132) + 68 clásicos ligeros (`<= 2 MB`) | 200 | 207.40 MB | [Descargar `Amoxcalli_Medio_1.2.1.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Medio_1.2.1.zip) |
-| 🏛️ **Amoxcalli Completo (Plus)** | 11 paquetes curados (132) + 170 clásicos únicos del fondo general | 302 | 454.35 MB | [Descargar `Amoxcalli_Completo_1.2.1.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Completo_1.2.1.zip) |
+| 🧩 **Amoxcalli Modular** | Motor limpio vacío (`+ Agregar Obras` desde cero) | 0 | 27.79 MB | [Descargar `Amoxcalli_Base_1.3.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip) |
+| 📚 **Amoxcalli Peso Medio** | 11 paquetes curados (132) + 68 clásicos ligeros (`<= 2 MB`) + Piper WASM `es_MX` | 200 | 272.37 MB | [Descargar `Amoxcalli_Medio_1.3.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Medio_1.3.zip) |
+| 🏛️ **Amoxcalli Completo (Plus)** | 11 paquetes curados (132) + 170 clásicos únicos del fondo general + Piper WASM `es_MX` | 302 | 514.12 MB | [Descargar `Amoxcalli_Completo_1.3.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Completo_1.3.zip) |
 
 ---
 
@@ -40,11 +40,12 @@ Todas comparten exactamente el mismo motor limpio (`v1.2.1` con lector offline +
 
 ## Descarga individual libro por libro y para integración web
 
-- **Release [`v1.2.1`](https://github.com/PlanteaSocial/amoxcalli/releases/tag/v1.2.1) *(recomendado)*:** `Amoxcalli_Base_1.2.1.zip`, `Amoxcalli_Medio_1.2.1.zip` y `Amoxcalli_Completo_1.2.1.zip` con mejoras de contraste modal e iconografía vectorial unificada.
+- **Release [`v1.3`](https://github.com/PlanteaSocial/amoxcalli/releases/tag/v1.3) *(recomendado)*:** `Amoxcalli_Base_1.3.zip`, `Amoxcalli_Medio_1.3.zip` y `Amoxcalli_Completo_1.3.zip` con lector de voz alta offline (Web Speech + Piper WASM `es_MX`), caché persistente en aula y endurecimiento de seguridad.
+- **Release [`v1.2.1`](https://github.com/PlanteaSocial/amoxcalli/releases/tag/v1.2.1):** ediciones anteriores v1.2.1.
 - **Release [`v1.2`](https://github.com/PlanteaSocial/amoxcalli/releases/tag/v1.2):** los 11 paquetes temáticos `.zip` completos (`Paquete_01`–`Paquete_11`) y edición inicial v1.2.
 - **Release [`v1.2-acervo`](https://github.com/PlanteaSocial/amoxcalli/releases/tag/v1.2-acervo):** los 132 archivos `.epub` individuales listos para descarga libro por libro.
 - **Portadas HD (`4.12 MB` total):** alojadas en [`catalogo/portadas/`](catalogo/portadas).
-- **Manifiesto listo para web:** [`catalogo/catalogo_paquetes_web.json`](catalogo/catalogo_paquetes_web.json) incluye los metadatos de las 3 ediciones `v1.2.1`, los 11 paquetes y 132 libros junto con todas sus URLs verificadas de descarga directa y portadas.
+- **Manifiesto listo para web:** [`catalogo/catalogo_paquetes_web.json`](catalogo/catalogo_paquetes_web.json) incluye los metadatos de las 3 ediciones `v1.3`, los 11 paquetes y 132 libros junto con todas sus URLs verificadas de descarga directa y portadas.
 
 ---
 
@@ -55,4 +56,4 @@ cd amoxcalli_base
 ./iniciar_amoxcalli.sh
 ```
 
-Para escuelas en **Windows** (sin instalar Python ni dependencias), descarga [`Amoxcalli_Base_1.2.1.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.2.1/Amoxcalli_Base_1.2.1.zip), descomprime la carpeta y ejecuta `iniciar_amoxcalli.bat`.
+Para escuelas en **Windows** (sin instalar Python ni dependencias), descarga [`Amoxcalli_Base_1.3.zip`](https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Amoxcalli_Base_1.3.zip), descomprime la carpeta y ejecuta `iniciar_amoxcalli.bat`.

@@ -4,5 +4,6 @@ __pycache__/
 Thumbs.db
 .amoxcalli_cache.json
 amoxcalli_base/programa/runtime/
+amoxcalli_base/programa/tts/
 amoxcalli_base/programa/libros/*
 !amoxcalli_base/programa/libros/.gitkeep
