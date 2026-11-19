@@ -2710,6 +2710,16 @@
       "tamano_bytes": 60419022,
       "sha256": "148b7c403df795d08ff79d16015e1637209ef7f09b6e55931845d904f95afc86",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Campo_y_Salud_1.3.zip"
+    },
+    "legal": {
+      "nombre": "Celer Legal v1.3 (México Federal)",
+      "archivo": "Celer_Legal_1.3.zip",
+      "documentos": 17,
+      "fichas": 214,
+      "tamano_mb": 28.90,
+      "tamano_bytes": 30299988,
+      "sha256": "7af376a5ca21089465c140ec4a539b947a8cf2dbb3f9ea81ec344b7e3fdfb7a2",
+      "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Legal_1.3.zip"
     }
   }
 }
