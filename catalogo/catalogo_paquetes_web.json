@@ -2715,10 +2715,10 @@
       "nombre": "Celer Legal v1.3 (México Federal)",
       "archivo": "Celer_Legal_1.3.zip",
       "documentos": 17,
-      "fichas": 214,
-      "tamano_mb": 28.90,
-      "tamano_bytes": 30299988,
-      "sha256": "7af376a5ca21089465c140ec4a539b947a8cf2dbb3f9ea81ec344b7e3fdfb7a2",
+      "fichas": 9986,
+      "tamano_mb": 54.42,
+      "tamano_bytes": 57062939,
+      "sha256": "f0f87f993246618f0c989d365c265575e21df4de7284abce91f7ee089fe4b712",
       "url_descarga": "https://github.com/PlanteaSocial/amoxcalli/releases/download/v1.3/Celer_Legal_1.3.zip"
     }
   }
